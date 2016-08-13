@@ -3,18 +3,18 @@
 #include <memory>
 #include "Common.h"
 
-namespace git
-{
+namespace git {
 
 class Repo
 {
 public:
 	explicit Repo(const std::string& path);
+
 	Repo(const Repo& other) = delete;
 	Repo& operator=(const Repo&) = delete;
-	~Repo();
 
 	git_repository* GetRepository();
+	~Repo();
 
 private:
 	git_repository* repo;

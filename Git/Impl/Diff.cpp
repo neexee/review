@@ -1,23 +1,53 @@
+#include <memory>
 #include "Utils/Utils.h"
+#include "Utils/Callback.h"
 #include "../Diff.h"
 #include "../Tree.h"
 
-namespace git
-{
+namespace git {
 
-DiffOptions::DiffOptions(const std::string& from, const std::string& to, const std::string& dir)
+DiffOptions::DiffOptions()
 : diffopts(GIT_DIFF_OPTIONS_INIT)
 , findopts(GIT_DIFF_FIND_OPTIONS_INIT)
-, from(from)
-, to(to)
-, dir(dir)
 {
 }
 
-Diff::Diff(const RepoPtr& repo)
+
+Diff::Diff(const RepoPtr& repo, const Treeish& first,
+	 const Treeish& second, const DiffOptions& diffopts)
+: Diff(repo, std::make_shared<Tree>(repo, first),
+	std::make_shared<Tree>(repo, second), diffopts)
+{
+}
+
+Diff::Diff(const RepoPtr& repo, const TreePtr& old_tree,
+	 const TreePtr& new_tree, const DiffOptions& options)
 : diff_(nullptr)
 , repo_(repo)
+, options_(options)
+, deltas_()
+, new_tree_(new_tree)
+, old_tree_(old_tree)
 {
+	check_lg2(git_diff_tree_to_tree(&diff_, repo->GetRepository(),
+									old_tree->GetTree(), new_tree->GetTree(), &options.diffopts),
+			  "diff trees", nullptr);
+	Init();
+}
+
+DeltaVector Diff::Deltas() const
+{
+	return deltas_;
+}
+
+TreePtr Diff::NewTree() const
+{
+	return new_tree_;
+}
+
+TreePtr Diff::OldTree() const
+{
+	return old_tree_;
 }
 
 git_diff** Diff::GetPointerToDiff()
@@ -30,90 +60,42 @@ Diff::~Diff()
 	git_diff_free(diff_);
 }
 
-static const char *colors[] = {
-	"\033[m", /* reset */
-	"\033[1m", /* bold */
-	"\033[31m", /* red */
-	"\033[32m", /* green */
-	"\033[36m" /* cyan */
-};
-
-void PrintDiff(Diff& diff, const PrintOptions& options)
+void Diff::Init()
 {
-	if (options.color >= 0)
-		fputs(colors[0], stdout);
-	auto stuff = *diff.GetPointerToDiff();
-	check_lg2(git_diff_print(stuff, options.format,
-							 color_printer, const_cast<int*>(&(options.color))),
-				"displaying diff", NULL);
-
-	if (options.color >= 0)
-		fputs(colors[0], stdout);
+	git_diff_foreach(
+		diff_,
+		callback::MakeCallback(&Diff::OnFile, this),
+		callback::MakeCallback(&Diff::OnBinary, this),
+		callback::MakeCallback(&Diff::OnHunk, this),
+		callback::MakeCallback(&Diff::OnLine, this),
+		nullptr);
 }
 
-const Diff MakeDiff(const DiffOptions& o)
+int Diff::OnFile(const git_diff_delta* delta, float /*progress*/,
+	void* /*payload*/)
 {
-	auto repo = std::make_shared<Repo>(o.dir);
-	Tree from{repo, o.from};
-	Tree to{repo, o.to};
-	auto d = from.MakeDiff(to, &o.diffopts);
-
-	return d;
-}
-
-int diff_output(
-	const git_diff_delta *d,
-	const git_diff_hunk *h,
-	const git_diff_line *l,
-	void *p)
-{
-	FILE *fp = (FILE*)p;
-
-	(void)d; (void)h;
-
-	if (!fp)
-		fp = stdout;
-
-	if (l->origin == GIT_DIFF_LINE_CONTEXT ||
-		l->origin == GIT_DIFF_LINE_ADDITION ||
-		l->origin == GIT_DIFF_LINE_DELETION)
-		fputc(l->origin, fp);
-
-	fwrite(l->content, 1, l->content_len, fp);
-
+	deltas_.emplace_back(delta);
 	return 0;
 }
 
-int color_printer(
-		const git_diff_delta *delta,
-		const git_diff_hunk *hunk,
-		const git_diff_line *line,
-		void *data)
+int Diff::OnHunk(const git_diff_delta* /*delta*/, const git_diff_hunk* /*hunk*/,
+	void* /*payload*/)
 {
-	int *last_color = (int*)data, color = 0;
+	return 0;
+}
 
-	(void)delta; (void)hunk;
+int Diff::OnLine(const git_diff_delta* /*delta*/, const git_diff_hunk* /*hunk*/,
+	const git_diff_line *line, void* /*payload*/)
+{
+	auto& current_delta = deltas_.back();
+	current_delta.AddLine(DiffLine(line));
+	return 0;
+}
 
-	if (*last_color >= 0) {
-		switch (line->origin) {
-		case GIT_DIFF_LINE_ADDITION:  color = 3; break;
-		case GIT_DIFF_LINE_DELETION:  color = 2; break;
-		case GIT_DIFF_LINE_ADD_EOFNL: color = 3; break;
-		case GIT_DIFF_LINE_DEL_EOFNL: color = 2; break;
-		case GIT_DIFF_LINE_FILE_HDR:  color = 1; break;
-		case GIT_DIFF_LINE_HUNK_HDR:  color = 4; break;
-		default: break;
-		}
-
-		if (color != *last_color) {
-			if (*last_color == 1 || color == 1)
-				fputs(colors[0], stdout);
-			fputs(colors[color], stdout);
-			*last_color = color;
-		}
-	}
-
-	return diff_output(delta, hunk, line, stdout);
+int Diff::OnBinary(const git_diff_delta* /*delta*/, const git_diff_binary* /*binary*/,
+							void* /*payload*/)
+{
+	return 0;
 }
 
 } // namespace git

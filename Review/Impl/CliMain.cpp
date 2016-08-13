@@ -1,5 +1,8 @@
 #include <iostream>
 #include "Git/Diff.h"
+#include "Git/AnnotatedDiff.h"
+#include "Git/Repo.h"
+#include "CLI/DiffFormat.h"
 
 void PrintUsage()
 {
@@ -14,10 +17,16 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	const char* repo_path = argv[1];
-	const char* from = argv[2];
-	const char* to = argv[3];
-	auto diff = git::MakeDiff(git::DiffOptions(from, to, repo_path));
-	git::PrintDiff(diff, git::PrintOptions{GIT_DIFF_FORMAT_PATCH, -1});
+	auto repo_path = std::string(argv[1]);
+	auto from = std::string(argv[2]);
+	auto to = std::string(argv[3]);
+
+	auto repo = std::make_shared<git::Repo>(repo_path);
+	auto diff = std::make_shared<git::Diff>(repo, from, to, git::DiffOptions());
+
+	namespace cd = cliutils::diff;
+	cd::PrintOptions options{cd::Format::Patch, cd::Appearance::Colorized};
+	git::AnnotatedDiff adiff(diff, repo);
+	std::cout << ToString(adiff, options);
 	return 0;
 }

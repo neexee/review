@@ -1,10 +1,11 @@
 #include "../Common.h"
 #include "Utils/Utils.h"
-namespace git {
 
+namespace git {
 namespace {
 
-struct LibGitInitializer {
+struct LibGitInitializer
+{
 	LibGitInitializer()
 	{
 		git_libgit2_init();
@@ -40,8 +41,12 @@ void check_lg2(int error, const char *message, const char *extra)
 	}
 
 	if (extra)
-		throw GitError(string_format("%s '%s' [%d]%s%s\n", message, extra, error, libgit2spacer, libgit2msg));
-	throw GitError(string_format("%s [%d]%s%s\n", message, error, libgit2spacer, libgit2msg));
+	{
+		throw GitError(utils::string_format("%s '%s' [%d]%s%s\n",
+							message, extra, error, libgit2spacer, libgit2msg));
+	}
+	throw GitError(utils::string_format("%s [%d]%s%s\n",
+						message, error, libgit2spacer, libgit2msg));
 }
 
 } //namespace git

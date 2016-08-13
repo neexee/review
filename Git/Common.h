@@ -2,13 +2,14 @@
 #include <stdexcept>
 #include <git2.h>
 
-namespace git
-{
+namespace git {
+
+typedef std::string Treeish;
 
 class GitError: public std::runtime_error
 {
 public:
-	GitError(const std::string& error);
+	explicit GitError(const std::string& error);
 };
 
 void check_lg2(int error, const char *message, const char *extra);
