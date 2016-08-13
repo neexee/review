@@ -1,9 +1,10 @@
 Sample file header
 
 Two new lines should be added between this
+// First placeholder
+// Second placeholder
 and next line.
 
-This and next line should be removed
-in next commit.
+One more line for more descriptive diff.
 
-This line should be replaced with a better one.
+Line was successfully replaced.
