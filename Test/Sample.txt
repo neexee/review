@@ -1,0 +1,9 @@
+Sample file header
+
+Two new lines should be added between this
+and next line.
+
+This and next line should be removed
+in next commit.
+
+This line should be replaced with a better one.
