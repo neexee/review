@@ -9,7 +9,7 @@ Tree::Tree(const RepoPtr& repo, const Treeish& treeish)
 , object_(std::make_shared<Object>())
 {
 	check_lg2(git_revparse_single(object_->Pointer(),
-								  repo->GetRepository(), treeish.c_str()),
+								  repo->Pointer(), treeish.c_str()),
 			  "looking up object", treeish.c_str());
 
 	check_lg2(git_object_peel(reinterpret_cast<git_object **>(&tree_),
@@ -35,11 +35,6 @@ git_tree* Tree::Pointer() const
 ObjectId Tree::Id() const
 {
 	return ObjectId(*git_tree_id(tree_));
-}
-
-ObjectPtr Tree::GetObject() const
-{
-	return object_;
 }
 
 ObjectId Tree::CommitId() const

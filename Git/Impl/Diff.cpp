@@ -1,17 +1,9 @@
-#include <memory>
-#include "Utils/Utils.h"
-#include "Utils/Callback.h"
 #include "../Diff.h"
 #include "../Tree.h"
+#include "Utils/Utils.h"
+#include "Utils/Callback.h"
 
 namespace git {
-
-DiffOptions::DiffOptions()
-: diffopts(GIT_DIFF_OPTIONS_INIT)
-, findopts(GIT_DIFF_FIND_OPTIONS_INIT)
-{
-}
-
 
 Diff::Diff(const RepoPtr& repo, const Treeish& first,
 	 const Treeish& second, const DiffOptions& diffopts)
@@ -29,8 +21,8 @@ Diff::Diff(const RepoPtr& repo, const TreePtr& old_tree,
 , new_tree_(new_tree)
 , old_tree_(old_tree)
 {
-	check_lg2(git_diff_tree_to_tree(&diff_, repo->GetRepository(),
-									old_tree->Pointer(), new_tree->Pointer(), &options.diffopts),
+	check_lg2(git_diff_tree_to_tree(&diff_, repo->Pointer(),
+				old_tree->Pointer(), new_tree->Pointer(), &options.diffopts_),
 			  "diff trees", nullptr);
 	Init();
 }
@@ -62,8 +54,7 @@ Diff::~Diff()
 
 void Diff::Init()
 {
-	git_diff_foreach(
-		diff_,
+	git_diff_foreach(diff_,
 		callback::MakeCallback(&Diff::OnFile, this),
 		callback::MakeCallback(&Diff::OnBinary, this),
 		callback::MakeCallback(&Diff::OnHunk, this),
@@ -93,7 +84,7 @@ int Diff::OnLine(const git_diff_delta* /*delta*/, const git_diff_hunk* /*hunk*/,
 }
 
 int Diff::OnBinary(const git_diff_delta* /*delta*/, const git_diff_binary* /*binary*/,
-							void* /*payload*/)
+	void* /*payload*/)
 {
 	return 0;
 }

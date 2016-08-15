@@ -1,8 +1,8 @@
 #include <sstream>
 #include <string>
+#include "Git/AnnotatedDiff.h"
 #include "Git/Common.h"
 #include "Git/Diff.h"
-#include "Git/AnnotatedDiff.h"
 
 namespace cliutils {
 namespace diff {
@@ -59,8 +59,6 @@ git_diff_format_t FormatToInt(Format format);
 void PrintDelta(const git::AnnotatedDiffDelta& delta, PrinterState& printer);
 void PrintDeltaHeader(const git::AnnotatedDiffDelta& delta, PrinterState& printer);
 void PrintLine(const git::AnnotatedDiffLine& line, PrinterState& printer);
-
-
 
 } // namespace diff
 } // namespace cliutils

@@ -1,11 +1,11 @@
 #pragma once
-#include <string>
+#include <memory>
 #include "Common.h"
-#include "Repo.h"
 #include "Object.h"
+#include "Repo.h"
 
-namespace git
-{
+namespace git {
+
 class Tree
 {
 public:
@@ -16,7 +16,6 @@ public:
 
 	git_tree* Pointer() const;
 	ObjectId Id() const;
-	ObjectPtr GetObject() const;
 	ObjectId CommitId() const;
 	~Tree();
 	RepoPtr Repo() const;

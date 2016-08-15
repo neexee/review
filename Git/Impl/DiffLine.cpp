@@ -5,6 +5,7 @@
 namespace git {
 
 namespace {
+
 const std::map<char, DiffLineType> line_type_map =
 {
 	{ GIT_DIFF_LINE_CONTEXT,       DiffLineType::Context      },
@@ -59,7 +60,7 @@ char ToChar(DiffLineType line_type)
 			return kv.first;
 		}
 	}
-	return  ' ';
+	return ' ';
 }
 
 } // namespace git

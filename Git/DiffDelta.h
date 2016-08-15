@@ -33,7 +33,7 @@ public:
 	explicit DiffFile(const git_diff_file& diff_file);
 
 	std::string Path() const;
-	ObjectId GetOid() const;
+	ObjectId Id() const;
 
 private:
 	std::string path_;

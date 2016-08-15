@@ -5,6 +5,7 @@
 namespace git {
 
 namespace {
+
 const std::map<int, DeltaStatus> status_map =
 {
 	{ GIT_DELTA_UNMODIFIED, DeltaStatus::Unmodified },
@@ -81,7 +82,7 @@ std::string DiffFile::Path() const
 	return path_;
 }
 
-ObjectId DiffFile::GetOid() const
+ObjectId DiffFile::Id() const
 {
 	return oid_;
 }

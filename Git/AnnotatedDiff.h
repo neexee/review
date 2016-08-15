@@ -1,7 +1,7 @@
 #pragma once
+#include "AnnotatedDiffLine.h"
 #include "Common.h"
 #include "Diff.h"
-#include "AnnotatedDiffLine.h"
 
 namespace git {
 
@@ -13,6 +13,7 @@ public:
 	AnnotatedDiffDelta(const DiffDelta& delta, const TreePtr& new_tree,
 					   const TreePtr& old_tree);
 	AnnotatedDiffLines Lines() const;
+
 private:
 	AnnotatedDiffLines lines_;
 };

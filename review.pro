@@ -20,7 +20,9 @@ SOURCES += Git/Impl/Common.cpp \
 		   CLI/Impl/DiffFormat.cpp \
 		   Git/Impl/Blame.cpp \
 		   Git/Impl/Signature.cpp \
-		   Git/Impl/AnnotatedDiffLine.cpp
+		   Git/Impl/AnnotatedDiffLine.cpp \
+		   Git/Impl/BlameHunk.cpp \
+		   Git/Impl/DiffOptions.cpp
 
 HEADERS  += Git/Common.h \
 			Git/Diff.h \
@@ -36,7 +38,9 @@ HEADERS  += Git/Common.h \
 			CLI/DiffFormat.h \
 			Git/Blame.h \
 			Git/Signature.h \
-			Git/AnnotatedDiffLine.h
+			Git/AnnotatedDiffLine.h \
+			Git/BlameHunk.h \
+			Git/DiffOptions.h
 
 FORMS    += \
 	UI/MainWindow.ui

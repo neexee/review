@@ -1,6 +1,6 @@
-#include "Utils/Callback.h"
 #include "../AnnotatedDiff.h"
 #include "../Blame.h"
+#include "Utils/Callback.h"
 
 namespace git {
 

@@ -10,9 +10,11 @@ class ObjectId
 public:
 	ObjectId();
 	explicit ObjectId(git_oid oid);
+
 	git_oid Oid() const;
 	std::string ShortHex() const;
 	std::string Hex() const;
+
 private:
 	git_oid oid_;
 };
@@ -28,8 +30,9 @@ public:
 
 	git_object** Pointer();
 	ObjectId Id() const;
+
 private:
-	git_object* object;
+	git_object* object_;
 };
 
 typedef std::shared_ptr<Object> ObjectPtr;

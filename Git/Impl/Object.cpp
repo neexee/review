@@ -3,23 +3,23 @@
 namespace git {
 
 Object::Object::Object()
-: object(nullptr)
+: object_(nullptr)
 {
 }
 
 Object::~Object()
 {
-	git_object_free(object);
+	git_object_free(object_);
 }
 
 git_object** Object::Pointer()
 {
-	return &object;
+	return &object_;
 }
 
 ObjectId Object::Id() const
 {
-	return ObjectId(*git_object_id(object));
+	return ObjectId(*git_object_id(object_));
 }
 
 //////////////////////////////////////////////////////////////////////////////

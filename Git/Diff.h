@@ -3,27 +3,22 @@
 #include <vector>
 #include "Common.h"
 #include "DiffDelta.h"
+#include "DiffOptions.h"
 #include "Object.h"
 #include "Repo.h"
 #include "Tree.h"
 
 namespace git {
 
-struct DiffOptions
-{
-	DiffOptions();
-	git_diff_options diffopts;
-	git_diff_find_options findopts;
-};
-
 typedef std::vector<DiffDelta> DeltaVector;
+
 class Diff
 {
 public:
 	Diff(const RepoPtr& repo, const Treeish& treeish1,
 		 const Treeish& treeish, const DiffOptions& options);
 	Diff(const RepoPtr& repo, const TreePtr& first, const TreePtr& second,
-		 const DiffOptions& diffopts);
+		const DiffOptions& diffopts);
 
 	Diff(const Diff&) = delete;
 	Diff& operator=(const Diff&) = delete;
@@ -42,7 +37,7 @@ private:
 	int OnLine(const git_diff_delta *delta, const git_diff_hunk *hunk,
 		const git_diff_line *line, void *payload);
 	int OnBinary(const git_diff_delta *delta, const git_diff_binary *binary,
-								void *payload);
+		void *payload);
 
 	git_diff* diff_;
 	RepoPtr repo_;

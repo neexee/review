@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include <memory>
+#include <string>
 #include "Common.h"
 
 namespace git {
@@ -13,11 +13,11 @@ public:
 	Repo(const Repo& other) = delete;
 	Repo& operator=(const Repo&) = delete;
 
-	git_repository* GetRepository();
+	git_repository* Pointer();
 	~Repo();
 
 private:
-	git_repository* repo;
+	git_repository* repo_;
 };
 
 typedef std::shared_ptr<Repo> RepoPtr;

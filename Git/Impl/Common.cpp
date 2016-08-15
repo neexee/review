@@ -27,13 +27,12 @@ GitError::GitError(const std::string& error)
 
 void check_lg2(int error, const char *message, const char *extra)
 {
-	const git_error* libgit2err;
-	const char* libgit2msg = "";
-	const char* libgit2spacer = "";
-
 	if (!error)
 		return;
 
+	const git_error* libgit2err;
+	const char* libgit2msg = "";
+	const char* libgit2spacer = "";
 	if ((libgit2err = giterr_last()) != NULL && libgit2err->message != NULL)
 	{
 		libgit2msg = libgit2err->message;
