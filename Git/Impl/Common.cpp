@@ -25,27 +25,4 @@ GitError::GitError(const std::string& error)
 {
 }
 
-void check_lg2(int error, const char *message, const char *extra)
-{
-	if (!error)
-		return;
-
-	const git_error* libgit2err;
-	const char* libgit2msg = "";
-	const char* libgit2spacer = "";
-	if ((libgit2err = giterr_last()) != NULL && libgit2err->message != NULL)
-	{
-		libgit2msg = libgit2err->message;
-		libgit2spacer = " - ";
-	}
-
-	if (extra)
-	{
-		throw GitError(utils::string_format("%s '%s' [%d]%s%s\n",
-							message, extra, error, libgit2spacer, libgit2msg));
-	}
-	throw GitError(utils::string_format("%s [%d]%s%s\n",
-						message, error, libgit2spacer, libgit2msg));
-}
-
 } //namespace git

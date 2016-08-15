@@ -57,9 +57,9 @@ std::string ToString(const git::DiffPtr& diff, const PrintOptions& options)
 {
 	PrinterState printer_state(options);
 
-	git::check_lg2(git_diff_print(*(diff->Pointer()), FormatToInt(options.format),
-					&diff::ColorPrinter, &printer_state),
-		"displaying diff", NULL);
+	git::CheckSuccess("displaying diff ",
+		git_diff_print,
+		*(diff->Pointer()), FormatToInt(options.format), &diff::ColorPrinter, &printer_state);
 
 	if (options.appearance == Appearance::Colorized)
 		printer_state.stream << control_symbol_map.at(ControlSymbol::Reset);

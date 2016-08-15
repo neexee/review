@@ -8,13 +8,12 @@ Tree::Tree(const RepoPtr& repo, const Treeish& treeish)
 , repo_(repo)
 , object_(std::make_shared<Object>())
 {
-	check_lg2(git_revparse_single(object_->Pointer(),
-								  repo->Pointer(), treeish.c_str()),
-			  "looking up object", treeish.c_str());
+	CheckSuccess("looking up object " + treeish,
+		git_revparse_single, object_->Pointer(), repo->Pointer(), treeish.c_str());
 
-	check_lg2(git_object_peel(reinterpret_cast<git_object **>(&tree_),
-							  *object_->Pointer(), GIT_OBJ_TREE),
-			  "resolving object to tree", treeish.c_str());
+	CheckSuccess("resolving object to tree " + treeish,
+		git_object_peel,
+		reinterpret_cast<git_object **>(&tree_), *object_->Pointer(), GIT_OBJ_TREE);
 }
 
 Tree::~Tree()

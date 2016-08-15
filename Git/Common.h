@@ -12,6 +12,9 @@ public:
 	explicit GitError(const std::string& error);
 };
 
-void check_lg2(int error, const char *message, const char *extra);
+template <typename Function, typename... Args>
+void CheckSuccess(std::string message, Function libgit2_function, Args&&...);
 
 } // namespace git
+
+#include "Impl/Common.inl"

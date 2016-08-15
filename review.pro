@@ -22,7 +22,8 @@ SOURCES += Git/Impl/Common.cpp \
 		   Git/Impl/Signature.cpp \
 		   Git/Impl/AnnotatedDiffLine.cpp \
 		   Git/Impl/BlameHunk.cpp \
-		   Git/Impl/DiffOptions.cpp
+		   Git/Impl/DiffOptions.cpp \
+		   Git/Impl/Common.inl
 
 HEADERS  += Git/Common.h \
 			Git/Diff.h \

@@ -21,9 +21,12 @@ Diff::Diff(const RepoPtr& repo, const TreePtr& old_tree,
 , new_tree_(new_tree)
 , old_tree_(old_tree)
 {
-	check_lg2(git_diff_tree_to_tree(&diff_, repo->Pointer(),
-				old_tree->Pointer(), new_tree->Pointer(), &options.diffopts_),
-			  "diff trees", nullptr);
+	auto message = "failed to diff trees " + old_tree->Id().ShortHex() +
+		" and " + new_tree->Id().ShortHex();
+	CheckSuccess(message,
+		git_diff_tree_to_tree,
+		&diff_, repo->Pointer(), old_tree->Pointer(), new_tree->Pointer(), &options.diffopts_);
+
 	Init();
 }
 
