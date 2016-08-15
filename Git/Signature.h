@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
-#include <memory>
 #include "Common.h"
 
 namespace git {
+namespace signature {
 
 class Date
 {
@@ -14,11 +14,11 @@ public:
 	int minutes_offset_;
 };
 
-class GitSignature
+class Signature
 {
 public:
-	GitSignature();
-	explicit GitSignature(const git_signature* signature);
+	Signature();
+	explicit Signature(const git_signature* signature);
 
 	std::string Name() const;
 	std::string Email() const;
@@ -30,4 +30,5 @@ private:
 	Date time_;
 };
 
+} // namespace signature
 } // namespace git

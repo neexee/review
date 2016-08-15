@@ -1,4 +1,5 @@
 #include "../Blame.h"
+
 namespace git {
 
 Blame::Blame(const std::string& path, const git::RepoPtr& repo, const ObjectId& commit_oid)
@@ -66,7 +67,7 @@ size_t BlameHunk::StartLineNumber() const
 	return start_line_number_;
 }
 
-GitSignature BlameHunk::Signature() const
+signature::Signature BlameHunk::Signature() const
 {
 	return signature_;
 }

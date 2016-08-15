@@ -1,5 +1,6 @@
 #include "../Signature.h"
 namespace git {
+namespace signature {
 
 Date::Date()
 {
@@ -13,30 +14,31 @@ Date::Date(const git_time& time)
 
 //////////////////////////////////////////////////////////////////////////////
 
-GitSignature::GitSignature()
+Signature::Signature()
 {
 }
 
-GitSignature::GitSignature(const git_signature* signature)
+Signature::Signature(const git_signature* signature)
 : author_name_(signature->name)
 , author_email_(signature->email)
 , time_(signature->when)
 {
 }
 
-std::string GitSignature::Name() const
+std::string Signature::Name() const
 {
 	return author_name_;
 }
 
-std::string GitSignature::Email() const
+std::string Signature::Email() const
 {
 	return author_email_;
 }
 
-Date GitSignature::Time() const
+Date Signature::Time() const
 {
 	return time_;
 }
 
+} // namespace signature
 } // namespace git

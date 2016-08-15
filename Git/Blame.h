@@ -15,13 +15,13 @@ public:
 	ObjectId CommitId() const;
 	size_t LinesNum() const;
 	size_t StartLineNumber() const;
-	GitSignature Signature() const;
+	signature::Signature Signature() const;
 
 private:
 	ObjectId commit_id_;
 	size_t lines_num_;
 	size_t start_line_number_;
-	GitSignature signature_;
+	signature::Signature signature_;
 };
 
 //////////////////////////////////////////////////////////////////////////////
