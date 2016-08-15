@@ -81,7 +81,7 @@ std::string DiffFile::Path() const
 	return path_;
 }
 
-Oid DiffFile::GetOid() const
+ObjectId DiffFile::GetOid() const
 {
 	return oid_;
 }

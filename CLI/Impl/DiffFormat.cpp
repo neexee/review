@@ -150,7 +150,7 @@ void PrintLine(const git::AnnotatedDiffLine& line, PrinterState& printer)
 	{
 		printer.stream << git::ToChar(line.LineType());
 	}
-	printer.stream << line.CommitId().ToString() << " " << line.Content();
+	printer.stream << line.CommitId().ShortHex() << " " << line.Content();
 }
 
 } // namespace diff

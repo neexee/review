@@ -1,11 +1,11 @@
 #include "../Blame.h"
 namespace git {
 
-Blame::Blame(const std::string& path, const git::RepoPtr& repo, const Oid& commit_oid)
+Blame::Blame(const std::string& path, const git::RepoPtr& repo, const ObjectId& commit_oid)
 : blame_(nullptr)
 {
 	git_blame_options blame_options = GIT_BLAME_OPTIONS_INIT;
-	blame_options.newest_commit = commit_oid.OidC();
+	blame_options.newest_commit = commit_oid.Oid();
 	check_lg2(git_blame_file(&blame_, repo->GetRepository(),
 				path.c_str(), &blame_options),
 			  "failed to blame", NULL);
@@ -17,7 +17,7 @@ Blame::Blame(const std::string& path, const git::RepoPtr& repo, const Oid& commi
 	}
 }
 
-Oid Blame::FindCommitId(size_t line_number) const
+ObjectId Blame::FindCommitId(size_t line_number) const
 {
 	for (const auto& hunk : hunks_)
 	{
@@ -44,14 +44,14 @@ BlameHunkVector Blame::Hunks() const
 //////////////////////////////////////////////////////////////////////////////
 
 BlameHunk::BlameHunk(const git_blame_hunk* hunk)
-: commit_id_(Oid(hunk->final_commit_id))
+: commit_id_(ObjectId(hunk->final_commit_id))
 , lines_num_(hunk->lines_in_hunk)
 , start_line_number_(hunk->final_start_line_number)
 , signature_(hunk->final_signature)
 {
 }
 
-Oid BlameHunk::CommitId() const
+ObjectId BlameHunk::CommitId() const
 {
 	return commit_id_;
 }

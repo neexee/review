@@ -33,11 +33,11 @@ public:
 	explicit DiffFile(const git_diff_file& diff_file);
 
 	std::string Path() const;
-	Oid GetOid() const;
+	ObjectId GetOid() const;
 
 private:
 	std::string path_;
-	Oid oid_;
+	ObjectId oid_;
 };
 
 class DiffDelta

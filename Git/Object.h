@@ -5,13 +5,14 @@
 
 namespace git {
 
-class Oid
+class ObjectId
 {
 public:
-	Oid();
-	explicit Oid(git_oid oid);
-	git_oid OidC() const;
-	std::string ToString() const;
+	ObjectId();
+	explicit ObjectId(git_oid oid);
+	git_oid Oid() const;
+	std::string ShortHex() const;
+	std::string Hex() const;
 private:
 	git_oid oid_;
 };
@@ -26,7 +27,7 @@ public:
 	Object& operator=(const Object&) = delete;
 
 	git_object** GetPointerToObject();
-	Oid GetOid() const;
+	ObjectId Id() const;
 private:
 	git_object* object;
 };

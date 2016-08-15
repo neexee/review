@@ -17,7 +17,7 @@ AnnotatedDiffLine::AnnotatedDiffLine(const DiffLine& diffline, const Blame& old_
 	}
 }
 
-Oid AnnotatedDiffLine::CommitId() const
+ObjectId AnnotatedDiffLine::CommitId() const
 {
 	return commit_id_;
 }

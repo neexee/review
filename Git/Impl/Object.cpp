@@ -17,27 +17,35 @@ git_object** Object::GetPointerToObject()
 	return &object;
 }
 
-Oid Object::GetOid() const
+ObjectId Object::Id() const
 {
-	return Oid(*git_object_id(object));
+	return ObjectId(*git_object_id(object));
 }
 
 //////////////////////////////////////////////////////////////////////////////
-Oid::Oid()
+ObjectId::ObjectId()
 {
 }
 
-Oid::Oid(git_oid oid)
+ObjectId::ObjectId(git_oid oid)
 : oid_(oid)
 {
 }
 
-git_oid Oid::OidC() const
+git_oid ObjectId::Oid() const
 {
 	return oid_;
 }
 
-std::string Oid::ToString() const
+std::string ObjectId::ShortHex() const
+{
+	const size_t short_commit_length = 7;
+	auto full_string = Hex();
+	full_string.resize(short_commit_length);
+	return full_string;
+}
+
+std::string ObjectId::Hex() const
 {
 	const size_t bufsize = GIT_OID_HEXSZ + 1;
 

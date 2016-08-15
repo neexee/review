@@ -32,9 +32,9 @@ git_tree* Tree::GetTree() const
 	return tree_;
 }
 
-Oid Tree::GetOid() const
+ObjectId Tree::Id() const
 {
-	return Oid(*git_tree_id(tree_));
+	return ObjectId(*git_tree_id(tree_));
 }
 
 ObjectPtr Tree::GetObject() const
@@ -42,9 +42,9 @@ ObjectPtr Tree::GetObject() const
 	return object_;
 }
 
-Oid Tree::CommitOid() const
+ObjectId Tree::CommitId() const
 {
-	return object_->GetOid();
+	return object_->Id();
 }
 
 } // namespace git
