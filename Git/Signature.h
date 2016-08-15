@@ -5,11 +5,11 @@
 
 namespace git {
 
-class GitTime
+class Date
 {
 public:
-	GitTime();
-	GitTime(const git_time& time);
+	Date();
+	Date(const git_time& time);
 	int64_t seconds_since_epoch_;
 	int minutes_offset_;
 };
@@ -22,12 +22,12 @@ public:
 
 	std::string Name() const;
 	std::string Email() const;
-	GitTime Time() const;
+	Date Time() const;
 
 private:
 	std::string author_name_;
 	std::string author_email_;
-	GitTime time_;
+	Date time_;
 };
 
 } // namespace git

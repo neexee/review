@@ -1,11 +1,11 @@
 #include "../Signature.h"
 namespace git {
 
-GitTime::GitTime()
+Date::Date()
 {
 }
 
-GitTime::GitTime(const git_time& time)
+Date::Date(const git_time& time)
 : seconds_since_epoch_(time.time)
 , minutes_offset_(time.offset)
 {
@@ -34,7 +34,7 @@ std::string GitSignature::Email() const
 	return author_email_;
 }
 
-GitTime GitSignature::Time() const
+Date GitSignature::Time() const
 {
 	return time_;
 }
