@@ -26,7 +26,7 @@ public:
 	Object(const Object&) = delete;
 	Object& operator=(const Object&) = delete;
 
-	git_object** GetPointerToObject();
+	git_object** Pointer();
 	ObjectId Id() const;
 private:
 	git_object* object;

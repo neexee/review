@@ -57,7 +57,7 @@ std::string ToString(const git::DiffPtr& diff, const PrintOptions& options)
 {
 	PrinterState printer_state(options);
 
-	git::check_lg2(git_diff_print(*(diff->GetPointerToDiff()), FormatToInt(options.format),
+	git::check_lg2(git_diff_print(*(diff->Pointer()), FormatToInt(options.format),
 					&diff::ColorPrinter, &printer_state),
 		"displaying diff", NULL);
 

@@ -14,7 +14,7 @@ public:
 	Tree(const Tree&) = delete;
 	Tree& operator=(const Tree&) = delete;
 
-	git_tree* GetTree() const;
+	git_tree* Pointer() const;
 	ObjectId Id() const;
 	ObjectPtr GetObject() const;
 	ObjectId CommitId() const;

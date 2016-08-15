@@ -30,7 +30,7 @@ Diff::Diff(const RepoPtr& repo, const TreePtr& old_tree,
 , old_tree_(old_tree)
 {
 	check_lg2(git_diff_tree_to_tree(&diff_, repo->GetRepository(),
-									old_tree->GetTree(), new_tree->GetTree(), &options.diffopts),
+									old_tree->Pointer(), new_tree->Pointer(), &options.diffopts),
 			  "diff trees", nullptr);
 	Init();
 }
@@ -50,7 +50,7 @@ TreePtr Diff::OldTree() const
 	return old_tree_;
 }
 
-git_diff** Diff::GetPointerToDiff()
+git_diff** Diff::Pointer()
 {
 	return &diff_;
 }

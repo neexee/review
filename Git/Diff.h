@@ -31,7 +31,7 @@ public:
 	DeltaVector Deltas() const;
 	TreePtr NewTree() const;
 	TreePtr OldTree() const;
-	git_diff** GetPointerToDiff();
+	git_diff** Pointer();
 
 	~Diff();
 

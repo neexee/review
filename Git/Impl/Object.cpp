@@ -12,7 +12,7 @@ Object::~Object()
 	git_object_free(object);
 }
 
-git_object** Object::GetPointerToObject()
+git_object** Object::Pointer()
 {
 	return &object;
 }
