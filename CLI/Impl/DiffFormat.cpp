@@ -1,8 +1,9 @@
-#include <git2.h>
 #include <map>
 #include <iostream>
-#include "../DiffFormat.h"
+#include "Git/Commit.h"
 #include "Utils/Utils.h"
+#include "../DiffFormat.h"
+
 
 namespace cliutils {
 namespace diff {
@@ -150,7 +151,10 @@ void PrintLine(const git::AnnotatedDiffLine& line, PrinterState& printer)
 	{
 		printer.stream << git::ToChar(line.LineType());
 	}
-	printer.stream << line.CommitId().ShortHex() << " " << line.Content();
+	auto commit_id = line.CommitId();
+	git::Commit commit(commit_id, line.Blame()->Repo());
+	printer.stream << commit_id.ShortHex() << " [" << commit.Summary() << "] "
+		<< line.Content();
 }
 
 } // namespace diff

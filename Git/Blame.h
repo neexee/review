@@ -17,12 +17,16 @@ public:
 
 	ObjectId FindCommitId(size_t line_number) const;
 	BlameHunkVector Hunks() const;
+	RepoPtr Repo() const;
 
 	~Blame();
 
 private:
 	git_blame* blame_;
 	BlameHunkVector hunks_;
+	RepoPtr repo_;
 };
+
+typedef std::shared_ptr<Blame> BlamePtr;
 
 } // namespace git

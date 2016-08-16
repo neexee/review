@@ -27,8 +27,8 @@ AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta, const TreePtr& ne
 : DiffDelta(delta)
 {
 	auto repo = new_tree->Repo();
-	Blame new_blame {delta.NewFile().Path(), repo, new_tree->CommitId()};
-	Blame old_blame {delta.OldFile().Path(), repo, old_tree->CommitId()};
+	auto new_blame = std::make_shared<Blame>(delta.NewFile().Path(), repo, new_tree->CommitId());
+	auto old_blame = std::make_shared<Blame>(delta.OldFile().Path(), repo, old_tree->CommitId());
 	for (const auto& line: delta.Lines())
 	{
 		lines_.emplace_back(line, old_blame, new_blame);
