@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/images/zoomin.png</file>
+        <file>qml/images/zoomout.png</file>
+    </qresource>
+</RCC>

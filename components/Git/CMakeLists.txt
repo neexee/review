@@ -10,13 +10,7 @@ add_definitions(${LIBGIT2_DEFINITIONS})
 
 include_directories(${Utils_INCLUDE_DIRS}
                     ${LIBGIT2_INCLUDE_DIRS}
-                    include)
-
-file(GLOB CPP_FILES src/*.cpp)
-
-add_library(${PROJECT_NAME} STATIC ${CPP_FILES})
-
-target_link_libraries(${PROJECT_NAME} Utils ${LIBGIT2_LIBRARIES})
+                    ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
                                  ${Utils_INCLUDE_DIRS}
@@ -25,3 +19,9 @@ set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
 
 set(${PROJECT_NAME}_DEFINITIONS ${LIBGIT2_DEFINITIONS}
     CACHE INTERNAL "${PROJECT_NAME}: Definitions" FORCE)
+
+file(GLOB HEADER_FILES include/*.h)
+file(GLOB CPP_FILES src/*.cpp)
+
+add_library(${PROJECT_NAME} STATIC ${CPP_FILES} ${HEADER_FILES})
+target_link_libraries(${PROJECT_NAME} Utils ${LIBGIT2_LIBRARIES})

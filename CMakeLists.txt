@@ -19,4 +19,5 @@ add_subdirectory(${COMPONENTS_DIR}/Git)
 add_subdirectory(${COMPONENTS_DIR}/CLI)
 
 # Add executable
+add_subdirectory(${COMPONENTS_DIR}/Ui)
 add_subdirectory(${COMPONENTS_DIR}/Review)
