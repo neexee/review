@@ -1,17 +1,20 @@
 cmake_minimum_required(VERSION 3.0)
 
 project(Utils CXX)
+set(CMAKE_CXX_STANDARD 14)
+
+find_package(Boost 1.60.0 COMPONENTS system filesystem REQUIRED)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${Boost_INCLUDE_DIRS})
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
+                                 ${Boost_INCLUDE_DIRS}
     CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 file(GLOB HEADER_FILES include/*.h)
 file(GLOB CPP_FILES src/*.cpp)
 
-# It's header-only library. For now.
-add_library(${PROJECT_NAME} INTERFACE)
-target_sources(${PROJECT_NAME} INTERFACE ${HEADER_FILES})
+add_library(${PROJECT_NAME} STATIC ${CPP_FILES} ${HEADER_FILES})
 
-target_compile_features(${PROJECT_NAME} INTERFACE cxx_variadic_templates)
-target_link_libraries(${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})

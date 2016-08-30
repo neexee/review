@@ -7,9 +7,11 @@
 
 #include "AnnotatedDiff.h"
 
-QT_BEGIN_NAMESPACE
-class QTextDocument;
-QT_END_NAMESPACE
+namespace review {
+
+//QT_BEGIN_NAMESPACE
+//class QTextDocument;
+//QT_END_NAMESPACE
 
 class ReviewHandler : public QObject
 {
@@ -28,8 +30,7 @@ class ReviewHandler : public QObject
 
 public:
 	ReviewHandler();
-	void Init(const std::string& repo_path,
-			  const std::string& from_commitish, const std::string& to_commitish);
+	void Init(const git::AnnotatedDiff& diff);
 
 	QQuickItem* Target() { return target_; }
 	void SetTarget(QQuickItem *Target);
@@ -69,7 +70,6 @@ private:
 	void Reset();
 	QTextCursor TextCursor() const;
 	void MergeFormatOnWordOrSelection(const QTextCharFormat& format);
-	git::AnnotatedDiff LoadDiff();
 
 	QQuickItem* target_;
 	QTextDocument* doc_;
@@ -81,8 +81,6 @@ private:
 	QFont font_;
 	int font_size_;
 	QString text_;
-
-	std::string repo_path_;
-	std::string from_commitish_;
-	std::string to_commitish_;
 };
+
+} // namespace review

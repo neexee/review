@@ -1,5 +1,5 @@
 import QtQuick 2.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
 import QtQuick.Window 2.1
@@ -68,24 +68,39 @@ ApplicationWindow {
             Item { Layout.fillWidth: true }
         }
     }
-    TextArea {
-        Accessible.name: "reviewHandler"
-        id: textArea
-        frameVisible: false
-        width: parent.width
-        anchors.top: toolBar.bottom
-        anchors.bottom: parent.bottom
-        text: reviewHandler.text
-        textFormat: Qt.PlainText
-        Component.onCompleted: forceActiveFocus()
-    }
-    ReviewHandler {
-        id: reviewHandler
-        objectName: "reviewHandler"
-        target: textArea
-        cursorPosition: textArea.cursorPosition
-        selectionStart: textArea.selectionStart
-        selectionEnd: textArea.selectionEnd
-        onFontSizeChanged: fontSizeSpinBox.value = reviewHandler.fontSize
+    SplitView {
+        anchors.fill: parent
+        orientation: Qt.Horizontal
+        Rectangle {
+            width: 200
+            TreeView {
+                model: fileTreeModel
+                anchors.fill: parent
+                TableViewColumn {
+                    title: "File names"
+                    role: "fileName"
+                }
+            }
+        }
+        Rectangle {
+            TextArea {
+                Accessible.name: "reviewHandler"
+                id: textArea
+                anchors.fill: parent
+                frameVisible: false
+                text: reviewHandler.text
+                textFormat: Qt.PlainText
+                Component.onCompleted: forceActiveFocus()
+            }
+            ReviewHandler {
+                id: reviewHandler
+                objectName: "reviewHandler"
+                target: textArea
+                cursorPosition: textArea.cursorPosition
+                selectionStart: textArea.selectionStart
+                selectionEnd: textArea.selectionEnd
+                onFontSizeChanged: fontSizeSpinBox.value = reviewHandler.fontSize
+            }
+        }
     }
 }

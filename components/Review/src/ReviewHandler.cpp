@@ -8,6 +8,8 @@
 
 #include "ReviewHandler.h"
 
+namespace review {
+
 ReviewHandler::ReviewHandler()
 : target_(0)
 , doc_(0)
@@ -17,27 +19,13 @@ ReviewHandler::ReviewHandler()
 {
 }
 
-void ReviewHandler::Init(const std::string& repo_path,
-	const std::string& from_commitish, const std::string& to_commitish)
+void ReviewHandler::Init(const git::AnnotatedDiff& diff)
 {
-	repo_path_ = repo_path;
-	from_commitish_ = from_commitish;
-	to_commitish_ = to_commitish;
-
-	auto diff = LoadDiff();
 	namespace cd = cliutils::diff;
 	cd::PrintOptions options{cd::Format::Patch, cd::Appearance::Plain};
 	SetText(QString::fromStdString(ToString(diff, options)));
 }
 
-git::AnnotatedDiff ReviewHandler::LoadDiff()
-{
-	auto repo = std::make_shared<git::Repo>(repo_path_);
-	auto diff = std::make_shared<git::Diff>(repo, from_commitish_,
-											to_commitish_, git::DiffOptions());
-
-	return git::AnnotatedDiff(diff, repo);
-}
 
 void ReviewHandler::SetTarget(QQuickItem *target)
 {
@@ -175,3 +163,5 @@ QStringList ReviewHandler::DefaultFontSizes() const
 	}
 	return sizes;
 }
+
+} // namespace review
