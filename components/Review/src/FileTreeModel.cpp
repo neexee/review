@@ -4,40 +4,50 @@
 
 namespace review {
 
-FileTreeModel::FileTreeModel(const std::vector<std::string>& paths, QObject* parent)
+FileTreeModel::FileTreeModel(QObject* parent)
 : QAbstractItemModel(parent)
 , root_(std::make_shared<FileTreeItem>("Title"))
 {
 	role_name_mapping_[static_cast<int>(Roles::FileName)] = "fileName";
+}
+
+QVector<QString> FileTreeModel::Paths() const
+{
+	return QVector<QString>();
+}
+
+void FileTreeModel::SetPaths(QVector<QString> paths)
+{
 	for(const auto& path: paths)
 	{
-		auto path_parts = utils::SplitPath(path);
+		auto path_parts = utils::SplitPath(path.toStdString());
 		std::deque<QString> q_path_parts;
 		std::transform(path_parts.begin(), path_parts.end(), std::back_inserter(q_path_parts),
 					   [](auto& part) { return QString::fromStdString(part); });
 		root_->AddChildrenRecursively(q_path_parts);
 	}
-}
-
-FileTreeModel::~FileTreeModel()
-{
+	emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
 }
 
 int FileTreeModel::columnCount(const QModelIndex& parent) const
 {
 	if (parent.isValid())
+	{
 		return static_cast<FileTreeItem*>(parent.internalPointer())->ColumnNumber();
-	else
-		return root_->ColumnNumber();
+	}
+	return root_->ColumnNumber();
 }
 
 QVariant FileTreeModel::data(const QModelIndex& index, int role) const
 {
 	if (!index.isValid())
+	{
 		return QVariant();
+	}
 	if (role != static_cast<int>(Roles::FileName))
+	{
 		return QVariant();
-
+	}
 	FileTreeItem* item = static_cast<FileTreeItem*>(index.internalPointer());
 	return item->Data();
 }
@@ -99,7 +109,9 @@ int FileTreeModel::rowCount(const QModelIndex& parent) const
 {
 
 	if (parent.column() > 0)
+	{
 		return 0;
+	}
 	return ParentItem(parent)->ChildNumber();
 }
 

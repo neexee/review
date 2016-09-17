@@ -9,8 +9,9 @@ namespace review {
 class FileTreeItem;
 typedef std::shared_ptr<FileTreeItem> FileTreeItemPtr;
 
-class FileTreeItem: public std::enable_shared_from_this<FileTreeItem>
+class FileTreeItem: public QObject, public std::enable_shared_from_this<FileTreeItem>
 {
+	Q_OBJECT
 public:
 	explicit FileTreeItem(const QString& data, const FileTreeItemPtr& parent = nullptr);
 	~FileTreeItem();

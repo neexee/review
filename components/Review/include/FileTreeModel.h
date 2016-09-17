@@ -12,7 +12,7 @@ namespace review {
 class FileTreeModel : public QAbstractItemModel
 {
 	Q_OBJECT
-
+	Q_PROPERTY(QVector<QString> paths READ Paths WRITE SetPaths)
 public:
 	enum class Roles
 	{
@@ -20,8 +20,8 @@ public:
 		FileDescription
 	};
 
-	FileTreeModel(const std::vector<std::string>& paths, QObject* parent = nullptr);
-	~FileTreeModel();
+	FileTreeModel(QObject* parent = nullptr);
+	QVector<QString> Paths() const;
 
 	QVariant data(const QModelIndex& index, int role) const Q_DECL_OVERRIDE;
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const Q_DECL_OVERRIDE;
@@ -31,6 +31,10 @@ public:
 	int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
 	int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
 	QHash<int, QByteArray> roleNames() const override;
+
+public Q_SLOTS:
+	void SetPaths(QVector<QString> paths);
+
 private:
 	FileTreeItem* ParentItem(const QModelIndex& parent) const;
 	FileTreeItemPtr root_;

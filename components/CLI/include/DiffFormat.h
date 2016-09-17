@@ -38,7 +38,7 @@ enum class ControlSymbol
 };
 
 std::string ToString(const git::DiffPtr& diff, const diff::PrintOptions& options);
-std::string ToString(const git::AnnotatedDiff& diff, const diff::PrintOptions& options);
+std::string ToString(const git::AnnotatedDiffPtr& diff, const diff::PrintOptions& options);
 
 //////////////////////////////////////////////////////////////////////////////
 // TODO: clean up it somehow

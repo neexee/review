@@ -113,10 +113,10 @@ git_diff_format_t FormatToInt(Format format)
 
 //////////////////////////////////////////////////////////////////////////////
 
-std::string ToString(const git::AnnotatedDiff& diff, const diff::PrintOptions& options)
+std::string ToString(const git::AnnotatedDiffPtr& diff, const diff::PrintOptions& options)
 {
 	PrinterState printer_state(options);
-	for (const auto& delta: diff.Deltas())
+	for (const auto& delta: diff->Deltas())
 	{
 		PrintDelta(delta, printer_state);
 	}

@@ -3,13 +3,16 @@
 #include <QtWidgets/QApplication>
 #include <QtQuick/QQuickView>
 
-#include "ReviewHandler.h"
+#include "Review.h"
+#include "DiffView.h"
 #include "FileTreeModel.h"
+#include "DiffModel.h"
 
 void PrintUsage();
-void SetupMainWindow(QObject *top_level, const git::AnnotatedDiff&);
-git::AnnotatedDiff GetDiff(char* argv[]);
-std::vector<std::string> DiffFilePaths(const git::AnnotatedDiff& diff);
+void RegisterTypes();
+void InitEngine(QQmlApplicationEngine& engine, review::Review& review,
+	review::FileTreeModel& file_tree_model);
+void ShowMainWindow(QQmlApplicationEngine& engine);
 
 int main(int argc, char *argv[])
 {
@@ -19,53 +22,45 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	QApplication app(argc, argv);
-
-	qmlRegisterType<review::ReviewHandler>("review.handler", 1, 0, "ReviewHandler");
-	QQmlApplicationEngine engine;
-
-	auto diff = GetDiff(argv);
-
-	review::FileTreeModel model(DiffFilePaths(diff));
-	engine.rootContext()->setContextProperty("fileTreeModel",&model);
-
-	engine.load(QUrl("qrc:/qml/main.qml"));
-
-	QObject* top_level = engine.rootObjects().value(0);
-	SetupMainWindow(top_level, diff);
-
-	return app.exec();
-}
-
-git::AnnotatedDiff GetDiff(char* argv[])
-{
 	auto repo_path = std::string(argv[1]);
 	auto from_commitish = std::string(argv[2]);
 	auto to_commitish = std::string(argv[3]);
 
-	auto repo = std::make_shared<git::Repo>(repo_path);
-	auto diff = std::make_shared<git::Diff>(repo, from_commitish,
-											to_commitish, git::DiffOptions());
+	review::Review review{from_commitish, to_commitish, repo_path};
+	review::FileTreeModel file_tree_model;
 
-	return git::AnnotatedDiff(diff, repo);
+	QApplication app(argc, argv);
+	QQmlApplicationEngine engine;
+
+	InitEngine(engine, review, file_tree_model);
+	ShowMainWindow(engine);
+
+	return app.exec();
 }
-void SetupMainWindow(QObject* top_level, const git::AnnotatedDiff& diff)
+
+void InitEngine(QQmlApplicationEngine& engine, review::Review& review,
+	review::FileTreeModel& file_tree_model)
 {
+	RegisterTypes();
+	file_tree_model.SetPaths(review.Diff()->Paths());
+	engine.rootContext()->setContextProperty("review", &review);
+	engine.rootContext()->setContextProperty("fileTreeModel",&file_tree_model);
+	engine.load(QUrl("qrc:/qml/main.qml"));
+}
+
+void ShowMainWindow(QQmlApplicationEngine& engine)
+{
+	QObject* top_level = engine.rootObjects().value(0);
 	QQuickWindow* window = qobject_cast<QQuickWindow*>(top_level);
 	window->show();
-
-	auto review_handler = top_level->findChild<review::ReviewHandler*>("reviewHandler");
-
-	review_handler->Init(diff);
 }
 
-std::vector<std::string> DiffFilePaths(const git::AnnotatedDiff& diff)
+void RegisterTypes()
 {
-	std::vector<std::string> file_paths;
-	auto deltas = diff.Deltas();
-	std::transform(deltas.begin(), deltas.end(), std::back_inserter(file_paths),
-				   [](auto& delta){ return delta.NewFile().Path(); });
-	return file_paths;
+	qmlRegisterType<review::DiffView>("diffview", 1, 0, "DiffView");
+	qmlRegisterType<review::Review>("review", 1, 0, "Review");
+	qmlRegisterType<review::FileTreeModel>("filetreemodel", 1, 0, "FileTreeModel");
+	qmlRegisterType<review::DiffModel>();
 }
 
 void PrintUsage()

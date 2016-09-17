@@ -3,7 +3,9 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
 import QtQuick.Window 2.1
-import review.handler 1.0
+import diffview 1.0
+import review 1.0
+import filetreemodel 1.0
 
 ApplicationWindow {
     width: 640
@@ -63,43 +65,48 @@ ApplicationWindow {
                 id: fontSizeSpinBox
                 implicitWidth: 50
                 value: 0
-                onValueChanged: reviewHandler.fontSize = value
+                onValueChanged: diffView.fontSize = value
             }
             Item { Layout.fillWidth: true }
         }
     }
-    SplitView {
+    Review {
+        id: reviewId
         anchors.fill: parent
-        orientation: Qt.Horizontal
-        Rectangle {
-            width: 200
-            TreeView {
-                model: fileTreeModel
-                anchors.fill: parent
-                TableViewColumn {
-                    title: "File names"
-                    role: "fileName"
+        objectName: "review"
+        onDiffChanged: fileTreeModel.paths = review.diff.paths
+        SplitView {
+            anchors.fill: parent
+            orientation: Qt.Horizontal
+            Rectangle {
+                width: 200
+                TreeView {
+                    model: fileTreeModel
+                    anchors.fill: parent
+                    TableViewColumn {
+                        title: "File names"
+                        role: "fileName"
+                    }
                 }
             }
-        }
-        Rectangle {
-            TextArea {
-                Accessible.name: "reviewHandler"
-                id: textArea
-                anchors.fill: parent
-                frameVisible: false
-                text: reviewHandler.text
-                textFormat: Qt.PlainText
-                Component.onCompleted: forceActiveFocus()
-            }
-            ReviewHandler {
-                id: reviewHandler
-                objectName: "reviewHandler"
-                target: textArea
-                cursorPosition: textArea.cursorPosition
-                selectionStart: textArea.selectionStart
-                selectionEnd: textArea.selectionEnd
-                onFontSizeChanged: fontSizeSpinBox.value = reviewHandler.fontSize
+            Rectangle {
+                TextArea {
+                    id: textArea
+                    anchors.fill: parent
+                    frameVisible: false
+                    text: review.diff.text
+                    textFormat: Qt.PlainText
+                    Component.onCompleted: forceActiveFocus()
+                }
+                DiffView {
+                    id: diffView
+                    objectName: "diffView"
+                    target: textArea
+                    cursorPosition: textArea.cursorPosition
+                    selectionStart: textArea.selectionStart
+                    selectionEnd: textArea.selectionEnd
+                    onFontSizeChanged: fontSizeSpinBox.value = diffView.fontSize
+                }
             }
         }
     }

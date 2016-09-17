@@ -2,15 +2,11 @@
 #include <QtGui/QTextCursor>
 #include <QtGui/QFontDatabase>
 
-#include "Diff.h"
-#include "Repo.h"
-#include "DiffFormat.h"
-
-#include "ReviewHandler.h"
+#include "DiffView.h"
 
 namespace review {
 
-ReviewHandler::ReviewHandler()
+DiffView::DiffView()
 : target_(0)
 , doc_(0)
 , cursor_position_(-1)
@@ -19,15 +15,7 @@ ReviewHandler::ReviewHandler()
 {
 }
 
-void ReviewHandler::Init(const git::AnnotatedDiff& diff)
-{
-	namespace cd = cliutils::diff;
-	cd::PrintOptions options{cd::Format::Patch, cd::Appearance::Plain};
-	SetText(QString::fromStdString(ToString(diff, options)));
-}
-
-
-void ReviewHandler::SetTarget(QQuickItem *target)
+void DiffView::SetTarget(QQuickItem* target)
 {
 	doc_ = 0;
 	target_ = target;
@@ -39,7 +27,7 @@ void ReviewHandler::SetTarget(QQuickItem *target)
 	QVariant doc = target_->property("textDocument");
 	if (doc.canConvert<QQuickTextDocument *>())
 	{
-		QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument *>();
+		QQuickTextDocument* qqdoc = doc.value<QQuickTextDocument*>();
 		if (qqdoc)
 		{
 			doc_ = qqdoc->textDocument();
@@ -48,21 +36,7 @@ void ReviewHandler::SetTarget(QQuickItem *target)
 	emit TargetChanged();
 }
 
-void ReviewHandler::SetText(const QString &arg)
-{
-	if (text_ != arg)
-	{
-		text_ = arg;
-		emit TextChanged();
-	}
-}
-
-QString ReviewHandler::Text() const
-{
-	return text_;
-}
-
-void ReviewHandler::SetCursorPosition(int position)
+void DiffView::SetCursorPosition(int position)
 {
 	if (position == cursor_position_)
 	{
@@ -74,12 +48,12 @@ void ReviewHandler::SetCursorPosition(int position)
 	Reset();
 }
 
-void ReviewHandler::Reset()
+void DiffView::Reset()
 {
 	emit FontSizeChanged();
 }
 
-QTextCursor ReviewHandler::TextCursor() const
+QTextCursor DiffView::TextCursor() const
 {
 	QTextCursor cursor = QTextCursor(doc_);
 	if (selection_start_ != selection_end_)
@@ -94,7 +68,7 @@ QTextCursor ReviewHandler::TextCursor() const
 	return cursor;
 }
 
-void ReviewHandler::MergeFormatOnWordOrSelection(const QTextCharFormat &format)
+void DiffView::MergeFormatOnWordOrSelection(const QTextCharFormat &format)
 {
 	QTextCursor cursor = TextCursor();
 	if (!cursor.hasSelection())
@@ -104,32 +78,32 @@ void ReviewHandler::MergeFormatOnWordOrSelection(const QTextCharFormat &format)
 	cursor.mergeCharFormat(format);
 }
 
-void ReviewHandler::SetSelectionStart(int position)
+void DiffView::SetSelectionStart(int position)
 {
 	selection_start_ = position;
 }
 
-void ReviewHandler::SetSelectionEnd(int position)
+void DiffView::SetSelectionEnd(int position)
 {
 	selection_end_ = position;
 }
 
-int ReviewHandler::CursorPosition() const
+int DiffView::CursorPosition() const
 {
 	return cursor_position_;
 }
 
-int ReviewHandler::SelectionStart() const
+int DiffView::SelectionStart() const
 {
 	return selection_start_;
 }
 
-int ReviewHandler::SelectionEnd() const
+int DiffView::SelectionEnd() const
 {
 	return selection_end_;
 }
 
-int ReviewHandler::FontSize() const
+int DiffView::FontSize() const
 {
 	QTextCursor cursor = TextCursor();
 	if (cursor.isNull())
@@ -140,7 +114,7 @@ int ReviewHandler::FontSize() const
 	return format.font().pointSize();
 }
 
-void ReviewHandler::SetFontSize(int arg)
+void DiffView::SetFontSize(int arg)
 {
 	QTextCursor cursor = TextCursor();
 	if (cursor.isNull())
@@ -153,7 +127,7 @@ void ReviewHandler::SetFontSize(int arg)
 	emit FontSizeChanged();
 }
 
-QStringList ReviewHandler::DefaultFontSizes() const
+QStringList DiffView::DefaultFontSizes() const
 {
 	QStringList sizes;
 	QFontDatabase db;
