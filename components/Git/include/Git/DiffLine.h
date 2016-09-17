@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <git2.h>
 
 namespace git {
@@ -16,6 +17,7 @@ enum class DiffLineType
 class DiffLine
 {
 public:
+	DiffLine();
 	explicit DiffLine(const git_diff_line* diff);
 	int OldNumber() const;
 	int NewNumber() const;

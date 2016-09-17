@@ -22,5 +22,4 @@ void CheckSuccess(std::string message, Function libgit2_function, Args&&... args
 	throw GitError(error_message);
 }
 
-
 } //namespace git

@@ -18,6 +18,10 @@ const std::map<char, DiffLineType> line_type_map =
 
 } // namespace
 
+DiffLine::DiffLine()
+{
+}
+
 DiffLine::DiffLine(const git_diff_line* line)
 : old_lineno_(line->old_lineno)
 , new_lineno_(line->new_lineno)

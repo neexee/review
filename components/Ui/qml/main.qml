@@ -89,7 +89,41 @@ ApplicationWindow {
                     }
                 }
             }
-            Rectangle {
+            ListView {
+                id: deltasView
+                model: review.diff.deltas
+                delegate: deltasViewDelegate
+                Component {
+                    id: deltasViewDelegate
+
+                    Item {
+                        anchors.margins: 4
+                        width: 515
+                        height: 27
+                        clip: true
+
+                        Row {
+                            spacing: 4
+
+                            Text {
+                                height: 26; width: 76
+                                text: model.text
+                                color: "black"
+                                font.bold: true
+                                horizontalAlignment: Text.AlignHCenter
+                            }
+                            Text {
+                                height: 26; width: 120
+                                text: model.type
+                                color: "black"
+                                font.bold: true
+                                horizontalAlignment: Text.AlignHCenter
+                            }
+                        }
+                    }
+               }
+            }
+            /*Rectangle {
                 TextArea {
                     id: textArea
                     anchors.fill: parent
@@ -107,7 +141,7 @@ ApplicationWindow {
                     selectionEnd: textArea.selectionEnd
                     onFontSizeChanged: fontSizeSpinBox.value = diffView.fontSize
                 }
-            }
+            }*/
         }
     }
 }

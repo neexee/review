@@ -1,3 +1,4 @@
+#pragma once
 #include "Blame.h"
 #include "DiffLine.h"
 

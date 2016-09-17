@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 	QQmlApplicationEngine engine;
 
 	InitEngine(engine, review, file_tree_model);
+
 	ShowMainWindow(engine);
 
 	return app.exec();
@@ -44,6 +45,7 @@ void InitEngine(QQmlApplicationEngine& engine, review::Review& review,
 {
 	RegisterTypes();
 	file_tree_model.SetPaths(review.Diff()->Paths());
+
 	engine.rootContext()->setContextProperty("review", &review);
 	engine.rootContext()->setContextProperty("fileTreeModel",&file_tree_model);
 	engine.load(QUrl("qrc:/qml/main.qml"));
@@ -62,6 +64,8 @@ void RegisterTypes()
 	qmlRegisterType<review::Review>("review", 1, 0, "Review");
 	qmlRegisterType<review::FileTreeModel>("filetreemodel", 1, 0, "FileTreeModel");
 	qmlRegisterType<review::DiffModel>();
+	qmlRegisterType<review::DiffDelta>();
+	qmlRegisterType<review::DiffLine>("diffline", 1, 0, "DiffLine");
 }
 
 void PrintUsage()
