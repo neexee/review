@@ -1,4 +1,4 @@
-#include "AnnotatedDiffLine.h"
+#include <Git/AnnotatedDiffLine.h>
 
 namespace git {
 

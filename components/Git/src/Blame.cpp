@@ -1,4 +1,4 @@
-#include "Blame.h"
+#include <Git/Blame.h>
 
 namespace git {
 

@@ -1,6 +1,6 @@
 #include <map>
 #include <git2.h>
-#include "DiffDelta.h"
+#include <Git/DiffDelta.h>
 
 namespace git {
 

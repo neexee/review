@@ -1,5 +1,5 @@
-#include "Object.h"
-#include "Tree.h"
+#include <Git/Object.h>
+#include <Git/Tree.h>
 
 namespace git {
 

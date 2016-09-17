@@ -1,9 +1,10 @@
 #include <map>
 #include <iostream>
-#include "Commit.h"
-#include "Utils.h"
-#include "DiffFormat.h"
 
+#include <Git/Commit.h>
+#include <Utils/Utils.h>
+
+#include <Cli/DiffFormat.h>
 
 namespace cliutils {
 namespace diff {

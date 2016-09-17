@@ -1,5 +1,6 @@
-#include "Common.h"
-#include "Utils.h"
+#include <Utils/Utils.h>
+
+#include <Git/Common.h>
 
 namespace git {
 namespace {

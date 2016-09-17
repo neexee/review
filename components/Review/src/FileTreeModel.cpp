@@ -1,6 +1,6 @@
 #include <QStringList>
-#include "Utils.h"
-#include "FileTreeModel.h"
+#include <Utils/Utils.h>
+#include <Review/FileTreeModel.h>
 
 namespace review {
 

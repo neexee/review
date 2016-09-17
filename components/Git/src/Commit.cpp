@@ -1,4 +1,4 @@
-#include "Commit.h"
+#include <Git/Commit.h>
 
 namespace git {
 

@@ -1,12 +1,13 @@
+#include <iostream>
 #include <QtCore/QString>
 #include <QtQml>
 #include <QtWidgets/QApplication>
 #include <QtQuick/QQuickView>
 
-#include "Review.h"
-#include "DiffView.h"
-#include "FileTreeModel.h"
-#include "DiffModel.h"
+#include <Review/Review.h>
+#include <Review/DiffView.h>
+#include <Review/FileTreeModel.h>
+#include <Review/DiffModel.h>
 
 void PrintUsage();
 void RegisterTypes();

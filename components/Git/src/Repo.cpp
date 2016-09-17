@@ -1,4 +1,4 @@
-#include "Repo.h"
+#include <Git/Repo.h>
 namespace git {
 
 Repo::Repo(const std::string& path)

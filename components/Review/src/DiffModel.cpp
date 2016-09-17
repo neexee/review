@@ -1,6 +1,6 @@
-#include "DiffModel.h"
-#include "AnnotatedDiff.h"
-#include "DiffFormat.h"
+#include <Review/DiffModel.h>
+#include <Git/AnnotatedDiff.h>
+#include <Cli/DiffFormat.h>
 
 namespace review {
 

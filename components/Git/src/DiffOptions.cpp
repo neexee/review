@@ -1,4 +1,4 @@
-#include "DiffOptions.h"
+#include <Git/DiffOptions.h>
 
 namespace git {
 

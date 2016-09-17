@@ -1,4 +1,4 @@
-#include "Object.h"
+#include <Git/Object.h>
 
 namespace git {
 

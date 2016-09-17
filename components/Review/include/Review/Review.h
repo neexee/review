@@ -1,7 +1,7 @@
 #pragma once
 #include <QtQuick/QQuickItem>
-#include "AnnotatedDiff.h"
-#include "DiffModel.h"
+#include <Git/AnnotatedDiff.h>
+#include <Review/DiffModel.h>
 
 namespace review {
 

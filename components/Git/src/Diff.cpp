@@ -1,7 +1,8 @@
-#include "Diff.h"
-#include "Tree.h"
-#include "Utils.h"
-#include "Callback.h"
+#include <Utils/Callback.h>
+#include <Utils/Utils.h>
+
+#include <Git/Diff.h>
+#include <Git/Tree.h>
 
 namespace git {
 

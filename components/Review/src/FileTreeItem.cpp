@@ -1,5 +1,5 @@
 #include <QStringList>
-#include "FileTreeItem.h"
+#include <Review/FileTreeItem.h>
 
 namespace review {
 

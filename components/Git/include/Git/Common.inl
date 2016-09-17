@@ -1,4 +1,4 @@
-#include "Utils.h"
+#include <Utils/Utils.h>
 
 namespace git {
 
@@ -21,5 +21,6 @@ void CheckSuccess(std::string message, Function libgit2_function, Args&&... args
 		"%s [%d]%s%s\n", message.c_str(), error, libgit2spacer, libgit2msg);
 	throw GitError(error_message);
 }
+
 
 } //namespace git

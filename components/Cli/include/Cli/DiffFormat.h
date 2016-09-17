@@ -1,8 +1,9 @@
 #include <sstream>
 #include <string>
-#include "AnnotatedDiff.h"
-#include "Common.h"
-#include "Diff.h"
+
+#include <Git/AnnotatedDiff.h>
+#include <Git/Common.h>
+#include <Git/Diff.h>
 
 namespace cliutils {
 namespace diff {

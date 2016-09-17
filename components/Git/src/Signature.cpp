@@ -1,4 +1,5 @@
-#include "Signature.h"
+#include <Git/Signature.h>
+
 namespace git {
 namespace signature {
 

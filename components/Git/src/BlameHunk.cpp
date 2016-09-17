@@ -1,4 +1,4 @@
-#include "BlameHunk.h"
+#include <Git/BlameHunk.h>
 
 namespace git {
 

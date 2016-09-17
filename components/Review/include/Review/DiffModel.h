@@ -5,7 +5,7 @@
 #include <QString>
 #include <QVector>
 
-#include "AnnotatedDiff.h"
+#include <Git/AnnotatedDiff.h>
 
 namespace review {
 

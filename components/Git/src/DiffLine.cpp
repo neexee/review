@@ -1,6 +1,6 @@
 #include <map>
 #include <git2.h>
-#include "DiffLine.h"
+#include <Git/DiffLine.h>
 
 namespace git {
 

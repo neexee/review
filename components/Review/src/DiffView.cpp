@@ -2,7 +2,7 @@
 #include <QtGui/QTextCursor>
 #include <QtGui/QFontDatabase>
 
-#include "DiffView.h"
+#include <Review/DiffView.h>
 
 namespace review {
 

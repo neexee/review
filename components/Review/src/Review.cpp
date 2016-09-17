@@ -1,8 +1,8 @@
-#include "Review.h"
+#include <Git/Diff.h>
+#include <Git/Repo.h>
+#include <Cli/DiffFormat.h>
 
-#include "Diff.h"
-#include "Repo.h"
-#include "DiffFormat.h"
+#include <Review/Review.h>
 
 namespace review {
 
