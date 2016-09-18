@@ -1,19 +1,33 @@
 import QtQuick 2.1
 
 Component {
-    Rectangle {
-        height: fileView.count * 20
+    Column {
         width: parent.width
-
-        ListView {
-            id: fileView
-            anchors.fill: parent
-            orientation: Qt.Vertical
-            model: modelData.diffLines
-            delegate: lineDelegate
+        spacing: 2
+        Rectangle {
+            height: 25
+            width: parent.width
+            color: "#204a87"
+            border.color: "#729fcf"
+            Text {
+                anchors.centerIn: parent
+                text: modelData.path
+                color: "white"
+            }
         }
-        LineView {
-            id: lineDelegate
+        Rectangle {
+            height: fileView.count * 20
+            width: parent.width
+            ListView {
+                id: fileView
+                anchors.fill: parent
+                orientation: Qt.Vertical
+                model: modelData.diffLines
+                delegate: lineDelegate
+            }
+            LineView {
+                id: lineDelegate
+            }
         }
     }
 }

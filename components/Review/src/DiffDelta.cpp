@@ -19,6 +19,11 @@ QList<QObject*> DiffDelta::Lines()
 	return lines;
 }
 
+QString DiffDelta::Path() const
+{
+	return QString::fromStdString(delta_.NewFile().Path());
+}
+
 int DiffDelta::CountLines(QQmlListProperty<DiffLine>* property)
 {
 	auto delta = static_cast<DiffDelta*>(property->data);
