@@ -2,9 +2,17 @@
 
 namespace git {
 
+Blame::Blame(const git::RepoPtr& repo, const ObjectId& commit_id)
+: blame_(nullptr)
+, repo_(repo)
+, commit_id_(commit_id)
+{
+}
+
 Blame::Blame(const std::string& path, const git::RepoPtr& repo, const ObjectId& commit_oid)
 : blame_(nullptr)
 , repo_(repo)
+, commit_id_(commit_oid)
 {
 	git_blame_options blame_options = GIT_BLAME_OPTIONS_INIT;
 	blame_options.newest_commit = commit_oid.Oid();
@@ -30,7 +38,7 @@ ObjectId Blame::FindCommitId(size_t line_number) const
 			return hunk.CommitId();
 		}
 	}
-	throw;
+	return commit_id_;
 }
 
 RepoPtr Blame::Repo() const

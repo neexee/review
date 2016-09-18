@@ -10,6 +10,7 @@ namespace git {
 class Blame
 {
 public:
+	Blame(const RepoPtr& repo, const ObjectId& commit_oid);
 	Blame(const std::string& path, const RepoPtr& repo, const ObjectId& commit_oid);
 
 	Blame(const Blame& other) = delete;
@@ -25,6 +26,7 @@ private:
 	git_blame* blame_;
 	BlameHunkVector hunks_;
 	RepoPtr repo_;
+	ObjectId commit_id_;
 };
 
 typedef std::shared_ptr<Blame> BlamePtr;
