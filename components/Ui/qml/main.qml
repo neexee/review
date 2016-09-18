@@ -97,6 +97,9 @@ ApplicationWindow {
                     orientation: Qt.Vertical
                     model: review.diff.deltas
                     delegate: deltaView
+                    onFlickStarted: ListView.verticalVelocity = 10000
+                    maximumFlickVelocity: 10000
+                    flickDeceleration: 10000
                 }
                 DeltaView {
                     id: deltaView
