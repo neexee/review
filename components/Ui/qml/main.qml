@@ -7,6 +7,7 @@ import diffview 1.0
 import review 1.0
 import filetreemodel 1.0
 
+
 ApplicationWindow {
     width: 640
     height: 480
@@ -70,6 +71,7 @@ ApplicationWindow {
             Item { Layout.fillWidth: true }
         }
     }
+
     Review {
         id: reviewId
         anchors.fill: parent
@@ -89,59 +91,17 @@ ApplicationWindow {
                     }
                 }
             }
-            ListView {
-                id: deltasView
-                model: review.diff.deltas
-                delegate: deltasViewDelegate
-                Component {
-                    id: deltasViewDelegate
-
-                    Item {
-                        anchors.margins: 4
-                        width: 515
-                        height: 27
-                        clip: true
-
-                        Row {
-                            spacing: 4
-
-                            Text {
-                                height: 26; width: 76
-                                text: model.text
-                                color: "black"
-                                font.bold: true
-                                horizontalAlignment: Text.AlignHCenter
-                            }
-                            Text {
-                                height: 26; width: 120
-                                text: model.type
-                                color: "black"
-                                font.bold: true
-                                horizontalAlignment: Text.AlignHCenter
-                            }
-                        }
-                    }
-               }
-            }
-            /*Rectangle {
-                TextArea {
-                    id: textArea
+            Rectangle {
+                ListView {
                     anchors.fill: parent
-                    frameVisible: false
-                    text: review.diff.text
-                    textFormat: Qt.PlainText
-                    Component.onCompleted: forceActiveFocus()
+                    orientation: Qt.Vertical
+                    model: review.diff.deltas
+                    delegate: deltaView
                 }
-                DiffView {
-                    id: diffView
-                    objectName: "diffView"
-                    target: textArea
-                    cursorPosition: textArea.cursorPosition
-                    selectionStart: textArea.selectionStart
-                    selectionEnd: textArea.selectionEnd
-                    onFontSizeChanged: fontSizeSpinBox.value = diffView.fontSize
+                DeltaView {
+                    id: deltaView
                 }
-            }*/
+            }
         }
     }
 }
