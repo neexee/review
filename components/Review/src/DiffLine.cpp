@@ -30,6 +30,15 @@ DiffLine::LineType DiffLine::GetLineType() const
 	return Context;
 }
 
+int DiffLine::LineNumber() const
+{
+	if (line_.LineType() == git::DiffLineType::Deletion)
+	{
+		return line_.OldNumber();
+	}
+	return line_.NewNumber();
+}
+
 QString DiffLine::Text() const
 {
 	return QString::fromStdString(line_.Content());
