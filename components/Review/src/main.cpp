@@ -1,21 +1,22 @@
 #include <iostream>
 #include <QtCore/QString>
 #include <QtQml>
-#include <QtWidgets/QApplication>
 #include <QtQuick/QQuickView>
+#include <QtWidgets/QApplication>
 
-#include <Review/Review.h>
+#include <Review/DiffModel.h>
 #include <Review/DiffView.h>
 #include <Review/FileTreeModel.h>
-#include <Review/DiffModel.h>
+#include <Review/Review.h>
 
 void PrintUsage();
 void RegisterTypes();
-void InitEngine(QQmlApplicationEngine& engine, review::Review& review,
-	review::FileTreeModel& file_tree_model);
+void InitEngine(QQmlApplicationEngine& engine,
+    review::Review& review,
+    review::FileTreeModel& file_tree_model);
 void ShowMainWindow(QQmlApplicationEngine& engine);
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	if (argc < 4)
 	{
@@ -40,14 +41,15 @@ int main(int argc, char *argv[])
 	return app.exec();
 }
 
-void InitEngine(QQmlApplicationEngine& engine, review::Review& review,
-	review::FileTreeModel& file_tree_model)
+void InitEngine(QQmlApplicationEngine& engine,
+    review::Review& review,
+    review::FileTreeModel& file_tree_model)
 {
 	RegisterTypes();
 	file_tree_model.SetPaths(review.Diff()->Paths());
 
 	engine.rootContext()->setContextProperty("review", &review);
-	engine.rootContext()->setContextProperty("fileTreeModel",&file_tree_model);
+	engine.rootContext()->setContextProperty("fileTreeModel", &file_tree_model);
 	engine.load(QUrl("qrc:/qml/main.qml"));
 }
 

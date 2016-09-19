@@ -3,7 +3,7 @@
 
 namespace review {
 
-class DiffLine: public QObject
+class DiffLine : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QString text READ Text NOTIFY TextChanged)
@@ -36,4 +36,4 @@ private:
 
 typedef std::shared_ptr<DiffLine> DiffLinePtr;
 
-}// namespace review
+} // namespace review

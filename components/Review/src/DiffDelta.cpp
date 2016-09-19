@@ -7,15 +7,18 @@ DiffDelta::DiffDelta(const git::AnnotatedDiffDelta& delta)
 : delta_(delta)
 {
 	auto git_lines = delta_.Lines();
-	std::transform(git_lines.begin(), git_lines.end(), std::back_inserter(lines_),
-				   [](auto& line) { return std::make_shared<DiffLine>(line); });
+	std::transform(
+	    git_lines.begin(), git_lines.end(), std::back_inserter(lines_), [](auto& line) {
+		    return std::make_shared<DiffLine>(line);
+		});
 }
 
 QList<QObject*> DiffDelta::Lines()
 {
 	QList<QObject*> lines;
-	std::transform(lines_.begin(), lines_.end(), std::back_inserter(lines),
-				   [](auto& line) { return line.get(); });
+	std::transform(lines_.begin(), lines_.end(), std::back_inserter(lines), [](auto& line) {
+		return line.get();
+	});
 	return lines;
 }
 

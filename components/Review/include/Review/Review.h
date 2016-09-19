@@ -5,15 +5,14 @@
 
 namespace review {
 
-class Review: public QQuickItem
+class Review : public QQuickItem
 {
 	Q_OBJECT
 	Q_PROPERTY(DiffModel* diff READ Diff WRITE SetDiff NOTIFY DiffChanged)
 
 public:
 	Review();
-	Review(const std::string& from, const std::string& to,
-				  const std::string& repo);
+	Review(const std::string& from, const std::string& to, const std::string& repo);
 
 	DiffModel* Diff() const;
 
@@ -27,4 +26,4 @@ private:
 	QDiffPtr diff_;
 };
 
-}// namespace review
+} // namespace review

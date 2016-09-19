@@ -59,7 +59,7 @@ DiffLineType ToLineType(char line_type)
 
 char ToChar(DiffLineType line_type)
 {
-	for (const auto& kv: line_type_map)
+	for (const auto& kv : line_type_map)
 	{
 		if (kv.second == line_type)
 		{

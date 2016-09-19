@@ -1,6 +1,6 @@
 #include <QStringList>
-#include <Utils/Utils.h>
 #include <Review/FileTreeModel.h>
+#include <Utils/Utils.h>
 
 namespace review {
 
@@ -18,12 +18,14 @@ QVector<QString> FileTreeModel::Paths() const
 
 void FileTreeModel::SetPaths(QVector<QString> paths)
 {
-	for(const auto& path: paths)
+	for (const auto& path : paths)
 	{
 		auto path_parts = utils::SplitPath(path.toStdString());
 		std::deque<QString> q_path_parts;
-		std::transform(path_parts.begin(), path_parts.end(), std::back_inserter(q_path_parts),
-					   [](auto& part) { return QString::fromStdString(part); });
+		std::transform(path_parts.begin(),
+		    path_parts.end(),
+		    std::back_inserter(q_path_parts),
+		    [](auto& part) { return QString::fromStdString(part); });
 		root_->AddChildrenRecursively(q_path_parts);
 	}
 	emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
@@ -52,14 +54,16 @@ QVariant FileTreeModel::data(const QModelIndex& index, int role) const
 	return item->Data();
 }
 
-QVariant FileTreeModel::headerData(int /*section*/, Qt::Orientation orientation, int role) const
+QVariant FileTreeModel::headerData(int /*section*/,
+    Qt::Orientation orientation,
+    int role) const
 {
 	if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
 		return root_->Data();
 	return QVariant();
 }
 
-Qt::ItemFlags FileTreeModel::flags(const QModelIndex &index) const
+Qt::ItemFlags FileTreeModel::flags(const QModelIndex& index) const
 {
 	if (!index.isValid())
 		return 0;
@@ -90,7 +94,7 @@ FileTreeItem* FileTreeModel::ParentItem(const QModelIndex& parent) const
 	return static_cast<FileTreeItem*>(parent.internalPointer());
 }
 
-QModelIndex FileTreeModel::parent(const QModelIndex &index) const
+QModelIndex FileTreeModel::parent(const QModelIndex& index) const
 {
 	if (!index.isValid())
 		return QModelIndex();

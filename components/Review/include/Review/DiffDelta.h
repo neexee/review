@@ -7,7 +7,7 @@
 
 namespace review {
 
-class DiffDelta: public QObject
+class DiffDelta : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QList<QObject*> diffLines READ Lines NOTIFY DiffLinesChanged)

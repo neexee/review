@@ -10,8 +10,9 @@ typedef std::vector<AnnotatedDiffLine> AnnotatedDiffLines;
 class AnnotatedDiffDelta : public DiffDelta
 {
 public:
-	AnnotatedDiffDelta(const DiffDelta& delta, const TreePtr& new_tree,
-					   const TreePtr& old_tree);
+	AnnotatedDiffDelta(const DiffDelta& delta,
+	    const TreePtr& new_tree,
+	    const TreePtr& old_tree);
 	AnnotatedDiffLines Lines() const;
 
 private:

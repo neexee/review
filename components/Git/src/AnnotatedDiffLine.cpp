@@ -2,8 +2,9 @@
 
 namespace git {
 
-AnnotatedDiffLine::AnnotatedDiffLine(const DiffLine& diffline, const BlamePtr& old_blame,
-									 const BlamePtr& new_blame)
+AnnotatedDiffLine::AnnotatedDiffLine(const DiffLine& diffline,
+    const BlamePtr& old_blame,
+    const BlamePtr& new_blame)
 : DiffLine(diffline)
 , blame_(old_blame)
 {

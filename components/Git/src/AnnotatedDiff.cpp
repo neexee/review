@@ -10,7 +10,7 @@ AnnotatedDiff::AnnotatedDiff(const DiffPtr& diff, const RepoPtr& repo)
 , repo_(repo)
 {
 	const auto& deltas = diff_->Deltas();
-	for (const auto& delta: deltas)
+	for (const auto& delta : deltas)
 	{
 		deltas_.emplace_back(delta, diff->NewTree(), diff->OldTree());
 	}
@@ -23,8 +23,9 @@ AnnotatedDiffDeltas AnnotatedDiff::Deltas() const
 
 //////////////////////////////////////////////////////////////////////////////
 
-AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta, const TreePtr& new_tree,
-									   const TreePtr& old_tree)
+AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta,
+    const TreePtr& new_tree,
+    const TreePtr& old_tree)
 : DiffDelta(delta)
 {
 	auto repo = new_tree->Repo();
@@ -36,7 +37,8 @@ AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta, const TreePtr& ne
 	}
 	else
 	{
-		old_blame = std::make_shared<Blame>(delta.OldFile().Path(), repo, old_tree->CommitId());
+		old_blame =
+		    std::make_shared<Blame>(delta.OldFile().Path(), repo, old_tree->CommitId());
 	}
 
 	std::shared_ptr<Blame> new_blame;
@@ -46,10 +48,11 @@ AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta, const TreePtr& ne
 	}
 	else
 	{
-		new_blame = std::make_shared<Blame>(delta.NewFile().Path(), repo, new_tree->CommitId());
+		new_blame =
+		    std::make_shared<Blame>(delta.NewFile().Path(), repo, new_tree->CommitId());
 	}
 
-	for (const auto& line: delta.Lines())
+	for (const auto& line : delta.Lines())
 	{
 		lines_.emplace_back(line, old_blame, new_blame);
 	}

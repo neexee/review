@@ -1,6 +1,6 @@
 #include <QtCore/QFileInfo>
-#include <QtGui/QTextCursor>
 #include <QtGui/QFontDatabase>
+#include <QtGui/QTextCursor>
 
 #include <Review/DiffView.h>
 
@@ -25,7 +25,7 @@ void DiffView::SetTarget(QQuickItem* target)
 	}
 
 	QVariant doc = target_->property("textDocument");
-	if (doc.canConvert<QQuickTextDocument *>())
+	if (doc.canConvert<QQuickTextDocument*>())
 	{
 		QQuickTextDocument* qqdoc = doc.value<QQuickTextDocument*>();
 		if (qqdoc)
@@ -68,7 +68,7 @@ QTextCursor DiffView::TextCursor() const
 	return cursor;
 }
 
-void DiffView::MergeFormatOnWordOrSelection(const QTextCharFormat &format)
+void DiffView::MergeFormatOnWordOrSelection(const QTextCharFormat& format)
 {
 	QTextCursor cursor = TextCursor();
 	if (!cursor.hasSelection())
@@ -131,7 +131,7 @@ QStringList DiffView::DefaultFontSizes() const
 {
 	QStringList sizes;
 	QFontDatabase db;
-	for(int size: db.standardSizes())
+	for (int size : db.standardSizes())
 	{
 		sizes.append(QString::number(size));
 	}

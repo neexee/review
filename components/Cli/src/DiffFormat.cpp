@@ -1,5 +1,5 @@
-#include <map>
 #include <iostream>
+#include <map>
 
 #include <Git/Commit.h>
 #include <Utils/Utils.h>
@@ -62,16 +62,21 @@ std::string ToString(const git::DiffPtr& diff, const PrintOptions& options)
 	PrinterState printer_state(options);
 
 	git::CheckSuccess("displaying diff ",
-		git_diff_print,
-		*(diff->Pointer()), FormatToInt(options.format), &diff::ColorPrinter, &printer_state);
+	    git_diff_print,
+	    *(diff->Pointer()),
+	    FormatToInt(options.format),
+	    &diff::ColorPrinter,
+	    &printer_state);
 
 	if (options.appearance == Appearance::Colorized)
 		printer_state.stream << control_symbol_map.at(ControlSymbol::Reset);
 	return printer_state.stream.str();
 }
 
-int ColorPrinter(const git_diff_delta* /*delta*/, const git_diff_hunk* /*hunk*/,
-		const git_diff_line* line, void* payload)
+int ColorPrinter(const git_diff_delta* /*delta*/,
+    const git_diff_hunk* /*hunk*/,
+    const git_diff_line* line,
+    void* payload)
 {
 	PrinterState* state = static_cast<PrinterState*>(payload);
 	ControlSymbol symbol = line_status_map.at(line->origin);
@@ -100,9 +105,8 @@ void PrintControlSymbol(PrinterState* state, ControlSymbol symbol)
 
 void PrintLine(const git_diff_line* line, std::stringstream& stream)
 {
-	if (line->origin == GIT_DIFF_LINE_CONTEXT ||
-		line->origin == GIT_DIFF_LINE_ADDITION ||
-		line->origin == GIT_DIFF_LINE_DELETION)
+	if (line->origin == GIT_DIFF_LINE_CONTEXT || line->origin == GIT_DIFF_LINE_ADDITION ||
+	    line->origin == GIT_DIFF_LINE_DELETION)
 	{
 		stream << line->origin;
 	}
@@ -119,7 +123,7 @@ git_diff_format_t FormatToInt(Format format)
 std::string ToString(const git::AnnotatedDiffPtr& diff, const diff::PrintOptions& options)
 {
 	PrinterState printer_state(options);
-	for (const auto& delta: diff->Deltas())
+	for (const auto& delta : diff->Deltas())
 	{
 		PrintDelta(delta, printer_state);
 	}
@@ -131,7 +135,7 @@ std::string ToString(const git::AnnotatedDiffPtr& diff, const diff::PrintOptions
 void PrintDelta(const git::AnnotatedDiffDelta& delta, PrinterState& printer)
 {
 	PrintDeltaHeader(delta, printer);
-	for (const auto& line: delta.Lines())
+	for (const auto& line : delta.Lines())
 	{
 		PrintLine(line, printer);
 	}
@@ -149,15 +153,15 @@ void PrintLine(const git::AnnotatedDiffLine& line, PrinterState& printer)
 	PrintControlSymbol(&printer, symbol);
 
 	if (line.LineType() == git::DiffLineType::Context ||
-		line.LineType() == git::DiffLineType::Addition ||
-		line.LineType() == git::DiffLineType::Deletion)
+	    line.LineType() == git::DiffLineType::Addition ||
+	    line.LineType() == git::DiffLineType::Deletion)
 	{
 		printer.stream << git::ToChar(line.LineType());
 	}
 	auto commit_id = line.CommitId();
 	git::Commit commit(commit_id, line.Blame()->Repo());
 	printer.stream << commit_id.ShortHex() << " [" << commit.Summary() << "] "
-		<< line.Content();
+	               << line.Content();
 }
 
 } // namespace diff

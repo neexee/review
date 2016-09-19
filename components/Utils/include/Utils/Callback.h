@@ -9,7 +9,7 @@ template <typename T>
 struct Callback;
 
 template <typename Ret, typename... Params>
-struct Callback<Ret (*) (Params...)>
+struct Callback<Ret (*)(Params...)>
 {
 	template <typename... Args>
 	static Ret callback(Args... args)
@@ -22,21 +22,29 @@ struct Callback<Ret (*) (Params...)>
 template <typename Ret, typename... Params>
 std::function<Ret(Params...)> Callback<Ret (*)(Params...)>::func;
 
-template<int I>
-struct Placeholder{};
+template <int I>
+struct Placeholder
+{
+};
 
 template <std::size_t... Is>
-struct Indices {};
+struct Indices
+{
+};
 
 template <std::size_t N, std::size_t... Is>
-struct BuildIndices: BuildIndices<N-1, N-1, Is...> {};
+struct BuildIndices : BuildIndices<N - 1, N - 1, Is...>
+{
+};
 
 template <std::size_t... Is>
-struct BuildIndices<0, Is...> : Indices<Is...> {};
+struct BuildIndices<0, Is...> : Indices<Is...>
+{
+};
 
 namespace detail {
 
-template<std::size_t... Is, class Func, class... Args>
+template <std::size_t... Is, class Func, class... Args>
 auto PlaceholderInsertingBind(Indices<Is...>, Func func, Args&&... args)
 {
 	return std::bind(func, std::forward<Args>(args)..., Placeholder<Is + 1>{}...);
@@ -44,16 +52,17 @@ auto PlaceholderInsertingBind(Indices<Is...>, Func func, Args&&... args)
 
 } // namespace detail
 
-template<class R, class C, class... FArgs, class... Args>
-auto PlaceholderInsertingBind(R (C::*func) (FArgs...), Args&&... args)
+template <class R, class C, class... FArgs, class... Args>
+auto PlaceholderInsertingBind(R (C::*func)(FArgs...), Args&&... args)
 {
-	return detail::PlaceholderInsertingBind(BuildIndices<sizeof...(FArgs)>{}, func, std::forward<Args>(args)...);
+	return detail::PlaceholderInsertingBind(
+	    BuildIndices<sizeof...(FArgs)>{}, func, std::forward<Args>(args)...);
 }
 
-template<class Caller, class Ret, class... FArgs>
-auto MakeCallback(Ret (Caller::* caller_member) (FArgs ...), Caller* caller)
+template <class Caller, class Ret, class... FArgs>
+auto MakeCallback(Ret (Caller::*caller_member)(FArgs...), Caller* caller)
 {
-	using CallbackType = Ret (*) (FArgs ...);
+	using CallbackType = Ret (*)(FArgs...);
 	Callback<CallbackType>::func = PlaceholderInsertingBind(caller_member, caller);
 	return static_cast<CallbackType>(Callback<CallbackType>::callback);
 }
@@ -62,7 +71,9 @@ auto MakeCallback(Ret (Caller::* caller_member) (FArgs ...), Caller* caller)
 
 namespace std {
 
-template<int I>
-struct is_placeholder<callback::Placeholder<I>> : std::integral_constant<int, I>{};
+template <int I>
+struct is_placeholder<callback::Placeholder<I>> : std::integral_constant<int, I>
+{
+};
 
 } // namespace std

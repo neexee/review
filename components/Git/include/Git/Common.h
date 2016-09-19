@@ -6,7 +6,7 @@ namespace git {
 
 typedef std::string Treeish;
 
-class GitError: public std::runtime_error
+class GitError : public std::runtime_error
 {
 public:
 	explicit GitError(const std::string& error);

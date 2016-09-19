@@ -7,14 +7,16 @@ Commit::Commit(const ObjectId& id, const RepoPtr& repo)
 {
 	auto oid = id.Oid();
 	CheckSuccess("failed to lookup commit " + id.Hex(),
-		git_commit_lookup, &commit_, repo->Pointer(), &oid);
+	    git_commit_lookup,
+	    &commit_,
+	    repo->Pointer(),
+	    &oid);
 }
 
 Commit::~Commit()
 {
 	git_commit_free(commit_);
 }
-
 
 git_commit* Commit::Pointer()
 {

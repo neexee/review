@@ -25,8 +25,9 @@ void FileTreeItem::AddChildrenRecursively(std::deque<QString> path_parts)
 		return;
 	}
 	QString root = path_parts.front();
-	auto child_iterator = std::find_if(children_.begin(), children_.end(),
-			  [root](FileTreeItemPtr& child) { return child->Data() == root; });
+	auto child_iterator = std::find_if(children_.begin(),
+	    children_.end(),
+	    [root](FileTreeItemPtr& child) { return child->Data() == root; });
 
 	if (child_iterator == children_.end())
 	{
@@ -68,8 +69,9 @@ int FileTreeItem::Row() const
 	if (parent_)
 	{
 		auto& parent_children = parent_->children_;
-		auto iter = std::find_if(parent_children.begin(), parent_children.end(),
-								 [this](auto& child) { return child.get() == this; });
+		auto iter = std::find_if(parent_children.begin(),
+		    parent_children.end(),
+		    [this](auto& child) { return child.get() == this; });
 
 		return std::distance(parent_children.begin(), iter);
 	}

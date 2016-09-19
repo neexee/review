@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
+#include <QQuickTextDocument>
 #include <QtCore/QTextCodec>
 #include <QtGui/QTextCharFormat>
-#include <QQuickTextDocument>
 #include <qqmlfile.h>
 
 namespace review {
