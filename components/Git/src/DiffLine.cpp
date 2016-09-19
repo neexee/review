@@ -6,6 +6,7 @@ namespace git {
 
 namespace {
 
+// clang-format off
 const std::map<char, DiffLineType> line_type_map =
 {
 	{ GIT_DIFF_LINE_CONTEXT,       DiffLineType::Context      },
@@ -15,6 +16,7 @@ const std::map<char, DiffLineType> line_type_map =
 	{ GIT_DIFF_LINE_ADD_EOFNL,     DiffLineType::AdditionEOF  },
 	{ GIT_DIFF_LINE_DEL_EOFNL,     DiffLineType::DeletionEOF  }
 };
+// clang-format on
 
 } // namespace
 

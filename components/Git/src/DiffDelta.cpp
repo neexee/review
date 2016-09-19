@@ -6,6 +6,7 @@ namespace git {
 
 namespace {
 
+// clang-format off
 const std::map<int, DeltaStatus> status_map =
 {
 	{ GIT_DELTA_UNMODIFIED, DeltaStatus::Unmodified },
@@ -20,6 +21,7 @@ const std::map<int, DeltaStatus> status_map =
 	{ GIT_DELTA_UNREADABLE, DeltaStatus::Unreadable },
 	{ GIT_DELTA_CONFLICTED, DeltaStatus::Conflicted }
 };
+// clang-format off
 
 } // namespace
 

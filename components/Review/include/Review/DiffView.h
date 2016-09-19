@@ -11,12 +11,14 @@ class DiffView : public QObject
 {
 	Q_OBJECT
 
+	// clang-format off
 	Q_PROPERTY(QQuickItem* target READ Target WRITE SetTarget NOTIFY TargetChanged)
 	Q_PROPERTY(int cursorPosition READ CursorPosition WRITE SetCursorPosition NOTIFY CursorPositionChanged)
 	Q_PROPERTY(int selectionStart READ SelectionStart WRITE SetSelectionStart NOTIFY SelectionStartChanged)
 	Q_PROPERTY(int selectionEnd READ SelectionEnd WRITE SetSelectionEnd NOTIFY SelectionEndChanged)
 	Q_PROPERTY(int fontSize READ FontSize WRITE SetFontSize NOTIFY FontSizeChanged)
 	Q_PROPERTY(QStringList sefaultFontSizes READ DefaultFontSizes NOTIFY DefaultFontSizesChanged)
+	//clang-format on
 
 public:
 	DiffView();

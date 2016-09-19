@@ -11,6 +11,7 @@ namespace diff {
 namespace {
 
 typedef std::string SymbolCode;
+// clang-format off
 const std::map<ControlSymbol, SymbolCode> control_symbol_map =
 {
 	{ ControlSymbol::Red,    "\033[31m" },
@@ -41,6 +42,7 @@ const std::map<int, ControlSymbol> line_status_map =
 	{ GIT_DIFF_LINE_BINARY,     ControlSymbol::Reset }
 };
 
+// clang-format on
 } // namespace
 
 //////////////////////////////////////////////////////////////////////////////

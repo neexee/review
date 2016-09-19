@@ -10,11 +10,11 @@ namespace diff {
 
 enum class Format
 {
-	Patch,          /**< full git diff */
-	PatchHeader,    /**< just the file headers of patch */
-	Raw,            /**< like git diff --raw */
-	NameOnly,       /**< like git diff --name-only */
-	NameStatus      /**< like git diff --name-status */
+	Patch,          // full git diff
+	PatchHeader,    // just the file headers of patch
+	Raw,            // like git diff --raw
+	NameOnly,       // like git diff --name-only
+	NameStatus      // like git diff --name-status
 };
 
 enum class Appearance
