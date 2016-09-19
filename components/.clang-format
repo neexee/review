@@ -1,0 +1,84 @@
+Language: Cpp
+Standard: Cpp11
+ColumnLimit: 95
+IndentWidth: 4
+ContinuationIndentWidth: 4
+TabWidth: 4
+UseTab: ForIndentation
+
+AlignAfterOpenBracket: DontAlign
+AlignConsecutiveAssignments: false
+AlignOperands: true
+AlignTrailingComments: true
+
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+IncludeCategories:
+  - Regex:           '^<[a-z_]*>$'
+    Priority:        -4
+  - Regex:           '<(git2|boost)'
+    Priority:        -3
+  - Regex:           '^<[a-zA-Z_/]*>$'
+    Priority:        -3
+  - Regex:           '^<[a-zA-Z_/]*.h>$'
+    Priority:        -2
+  - Regex:           '^"[a-zA-Z_/]*.h"$'
+    Priority:        -1
+
+SortIncludes: true
+ReflowComments: false
+
+BreakBeforeBraces: Custom
+BraceWrapping: {
+    AfterClass: 'true'
+    AfterControlStatement: 'true'
+    AfterEnum: 'true'
+    AfterFunction: 'true'
+    AfterNamespace: 'false'
+    AfterStruct: 'true'
+    AfterUnion: 'true'
+    BeforeCatch: 'true'
+    BeforeElse: 'true'
+    IndentBraces: 'false'
+}
+
+AlwaysBreakTemplateDeclarations: true
+BreakBeforeBinaryOperators: None
+BreakConstructorInitializersBeforeComma: true
+BreakBeforeTernaryOperators: false
+
+AllowAllParametersOfDeclarationOnNextLine: false
+AlwaysBreakAfterReturnType: None
+AlwaysBreakAfterDefinitionReturnType: None
+BinPackArguments: false
+BinPackParameters: false
+
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 0
+
+AccessModifierOffset: -4
+IndentCaseLabels: false
+IndentWrappedFunctionNames: false
+NamespaceIndentation: None
+
+MaxEmptyLinesToKeep: 1
+
+PointerAlignment: Left
+
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpacesBeforeTrailingComments: 1
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+Cpp11BracedListStyle: true
+
+PenaltyReturnTypeOnItsOwnLine: 10000
+PenaltyBreakBeforeFirstCallParameter: 10000
+PenaltyExcessCharacter: 500
