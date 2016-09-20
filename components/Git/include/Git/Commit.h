@@ -1,10 +1,11 @@
 #pragma once
 #include <memory>
 #include <string>
-#include "Object.h"
 #include "Repo.h"
 
 namespace git {
+
+class ObjectId;
 
 class Commit
 {

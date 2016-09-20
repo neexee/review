@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include "Common.h"
-#include "Object.h"
+#include "Commit.h"
+#include "Repo.h"
 #include "Signature.h"
 
 namespace git {
@@ -9,20 +9,21 @@ namespace git {
 class BlameHunk
 {
 public:
-	explicit BlameHunk(const git_blame_hunk* hunk);
-
-	ObjectId CommitId() const;
+	BlameHunk(const git_blame_hunk* hunk, const RepoPtr& repo);
+	BlameHunk(const git_blame_hunk* hunk, const CommitPtr& commit);
+	CommitPtr Commit() const;
 	size_t LinesNum() const;
 	size_t StartLineNumber() const;
 	signature::Signature Signature() const;
 
 private:
-	ObjectId commit_id_;
+	CommitPtr commit_;
 	size_t lines_num_;
 	size_t start_line_number_;
 	signature::Signature signature_;
 };
 
-typedef std::vector<BlameHunk> BlameHunkVector;
+typedef std::shared_ptr<BlameHunk> BlameHunkPtr;
+typedef std::vector<BlameHunkPtr> BlameHunkVector;
 
 } // namespace git

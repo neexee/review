@@ -1,11 +1,11 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include <QAbstractItemModel>
 #include <QString>
 #include <QVector>
 
 #include <Git/AnnotatedDiff.h>
+#include <Review/Commit.h>
 #include <Review/DiffDelta.h>
 
 namespace review {
@@ -29,12 +29,12 @@ Q_SIGNALS:
 	void DeltasChanged();
 
 private:
-	static int CountDeltas(QQmlListProperty<DiffDelta>* property);
-	static DiffDelta* At(QQmlListProperty<DiffDelta>* property, int index);
 	git::AnnotatedDiffPtr adiff_;
 	QList<DiffDeltaPtr> deltas_;
+	CommitPtr from_commit_;
+	CommitPtr to_commit_;
 };
 
-typedef std::shared_ptr<DiffModel> QDiffPtr;
+typedef std::shared_ptr<DiffModel> DiffModelPtr;
 
 } // namespace review

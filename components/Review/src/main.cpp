@@ -4,6 +4,9 @@
 #include <QtQuick/QQuickView>
 #include <QtWidgets/QApplication>
 
+#include <Review/Commit.h>
+#include <Review/DiffDelta.h>
+#include <Review/DiffLine.h>
 #include <Review/DiffModel.h>
 #include <Review/DiffView.h>
 #include <Review/FileTreeModel.h>

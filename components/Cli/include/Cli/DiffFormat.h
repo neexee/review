@@ -59,9 +59,9 @@ void PrintControlSymbol(PrinterState* state, ControlSymbol symbol);
 void PrintLine(const git_diff_line* line, std::stringstream& stream);
 git_diff_format_t FormatToInt(Format format);
 
-void PrintDelta(const git::AnnotatedDiffDelta& delta, PrinterState& printer);
-void PrintDeltaHeader(const git::AnnotatedDiffDelta& delta, PrinterState& printer);
-void PrintLine(const git::AnnotatedDiffLine& line, PrinterState& printer);
+void PrintDelta(const git::AnnotatedDiffDeltaPtr& delta, PrinterState& printer);
+void PrintDeltaHeader(const git::AnnotatedDiffDeltaPtr& delta, PrinterState& printer);
+void PrintLine(const git::AnnotatedDiffLinePtr& line, PrinterState& printer);
 
 } // namespace diff
 } // namespace cliutils

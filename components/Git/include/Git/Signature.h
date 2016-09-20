@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Common.h"
+#include <git2.h>
 
 namespace git {
 namespace signature {

@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "BlameHunk.h"
-#include "Common.h"
 #include "Object.h"
 #include "Repo.h"
 
@@ -15,12 +14,11 @@ public:
 
 	Blame(const Blame& other) = delete;
 	Blame& operator=(const Blame&) = delete;
+	~Blame();
 
-	ObjectId FindCommitId(size_t line_number) const;
+	CommitPtr FindCommitByLine(size_t line_number) const;
 	BlameHunkVector Hunks() const;
 	RepoPtr Repo() const;
-
-	~Blame();
 
 private:
 	git_blame* blame_;

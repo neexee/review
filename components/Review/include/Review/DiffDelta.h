@@ -1,7 +1,8 @@
+#pragma once
 #include <memory>
 #include <vector>
+#include <QList>
 #include <QObject>
-#include <QQmlListProperty>
 #include <Git/AnnotatedDiff.h>
 #include <Review/DiffLine.h>
 
@@ -14,7 +15,7 @@ class DiffDelta : public QObject
 	Q_PROPERTY(QString path READ Path NOTIFY PathChanged)
 
 public:
-	DiffDelta(const git::AnnotatedDiffDelta& delta);
+	DiffDelta(const git::AnnotatedDiffDeltaPtr& delta);
 	QList<QObject*> Lines();
 	QString Path() const;
 
@@ -23,9 +24,7 @@ Q_SIGNALS:
 	void PathChanged();
 
 private:
-	static int CountLines(QQmlListProperty<DiffLine>* property);
-	static DiffLine* At(QQmlListProperty<DiffLine>* property, int index);
-	git::AnnotatedDiffDelta delta_;
+	git::AnnotatedDiffDeltaPtr delta_;
 	std::vector<DiffLinePtr> lines_;
 };
 

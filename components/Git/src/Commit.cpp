@@ -1,4 +1,6 @@
 #include <Git/Commit.h>
+#include <Git/Common.h>
+#include <Git/Object.h>
 
 namespace git {
 

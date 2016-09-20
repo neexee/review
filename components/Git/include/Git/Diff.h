@@ -1,10 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Common.h"
 #include "DiffDelta.h"
 #include "DiffOptions.h"
-#include "Object.h"
 #include "Repo.h"
 #include "Tree.h"
 

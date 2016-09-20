@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <Cli/DiffFormat.h>
 #include <Git/AnnotatedDiff.h>
+#include <Review/DiffDelta.h>
 #include <Review/DiffModel.h>
 
 namespace review {
@@ -23,10 +24,10 @@ DiffModel::DiffModel(const std::string& from,
 QVector<QString> DiffModel::Paths() const
 {
 	QVector<QString> file_paths;
-	auto deltas = adiff_->Deltas();
+	const auto& deltas = adiff_->Deltas();
 	std::transform(
 	    deltas.begin(), deltas.end(), std::back_inserter(file_paths), [](auto& delta) {
-		    return QString::fromStdString(delta.NewFile().Path());
+		    return QString::fromStdString(delta->NewFile().Path());
 		});
 	return file_paths;
 }
@@ -48,18 +49,6 @@ QList<QObject*> DiffModel::Deltas()
 		    return delta.get();
 		});
 	return deltas;
-}
-
-int DiffModel::CountDeltas(QQmlListProperty<DiffDelta>* property)
-{
-	auto model = static_cast<DiffModel*>(property->data);
-	return model->deltas_.size();
-}
-
-DiffDelta* DiffModel::At(QQmlListProperty<DiffDelta>* property, int index)
-{
-	auto model = static_cast<DiffModel*>(property->data);
-	return model->deltas_[index].get();
 }
 
 } // namespace review

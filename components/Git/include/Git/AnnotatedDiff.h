@@ -1,26 +1,8 @@
 #pragma once
-#include "AnnotatedDiffLine.h"
-#include "Common.h"
+#include "AnnotatedDiffDelta.h"
 #include "Diff.h"
 
 namespace git {
-
-typedef std::vector<AnnotatedDiffLine> AnnotatedDiffLines;
-
-class AnnotatedDiffDelta : public DiffDelta
-{
-public:
-	AnnotatedDiffDelta(const DiffDelta& delta,
-	    const TreePtr& new_tree,
-	    const TreePtr& old_tree);
-	AnnotatedDiffLines Lines() const;
-
-private:
-	AnnotatedDiffLines lines_;
-};
-
-//////////////////////////////////////////////////////////////////////////////
-typedef std::vector<AnnotatedDiffDelta> AnnotatedDiffDeltas;
 
 class AnnotatedDiff
 {
@@ -36,4 +18,5 @@ private:
 };
 
 typedef std::shared_ptr<AnnotatedDiff> AnnotatedDiffPtr;
+
 } // namespace git

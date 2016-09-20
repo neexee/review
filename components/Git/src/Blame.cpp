@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <Git/Blame.h>
+#include <Git/Common.h>
 
 namespace git {
 
@@ -26,22 +28,20 @@ Blame::Blame(const std::string& path, const git::RepoPtr& repo, const ObjectId& 
 	auto hunk_count = git_blame_get_hunk_count(blame_);
 	for (decltype(hunk_count) hunk_number = 0; hunk_number < hunk_count; ++hunk_number)
 	{
-		hunks_.emplace_back(git_blame_get_hunk_byindex(blame_, hunk_number));
+		auto hunk = git_blame_get_hunk_byindex(blame_, hunk_number);
+		auto hunk_commit = std::make_shared<Commit>(ObjectId(hunk->final_commit_id), repo);
+		hunks_.emplace_back(std::make_shared<BlameHunk>(hunk, hunk_commit));
 	}
 }
 
-ObjectId Blame::FindCommitId(size_t line_number) const
+CommitPtr Blame::FindCommitByLine(size_t line_number) const
 {
-	for (const auto& hunk : hunks_)
-	{
-		auto left_bound = hunk.StartLineNumber();
-		auto right_bound = left_bound + hunk.LinesNum();
-		if (line_number >= left_bound && line_number < right_bound)
-		{
-			return hunk.CommitId();
-		}
-	}
-	return commit_id_;
+	auto iter = std::find_if(hunks_.begin(), hunks_.end(), [line_number](const auto& hunk) {
+		auto left_bound = hunk->StartLineNumber();
+		auto right_bound = left_bound + hunk->LinesNum();
+		return line_number >= left_bound && line_number < right_bound;
+	});
+	return (*iter)->Commit();
 }
 
 RepoPtr Blame::Repo() const

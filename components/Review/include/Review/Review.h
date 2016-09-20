@@ -23,7 +23,7 @@ Q_SIGNALS:
 	void DiffChanged(DiffModel* diff);
 
 private:
-	QDiffPtr diff_;
+	DiffModelPtr diff_;
 };
 
 } // namespace review

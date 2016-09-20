@@ -1,5 +1,5 @@
 #pragma once
-#include "Blame.h"
+#include <vector>
 #include "DiffLine.h"
 
 namespace git {
@@ -7,15 +7,14 @@ namespace git {
 class AnnotatedDiffLine : public DiffLine
 {
 public:
-	AnnotatedDiffLine(const DiffLine& diffline,
-	    const BlamePtr& old_blame,
-	    const BlamePtr& new_blame);
-	ObjectId CommitId() const;
-	BlamePtr Blame() const;
+	AnnotatedDiffLine(const DiffLine& diffline, const CommitPtr& commit);
+	CommitPtr Commit() const;
 
 private:
-	ObjectId commit_id_;
-	BlamePtr blame_;
+	CommitPtr commit_;
 };
+
+typedef std::shared_ptr<AnnotatedDiffLine> AnnotatedDiffLinePtr;
+typedef std::vector<AnnotatedDiffLinePtr> AnnotatedDiffLines;
 
 } // namespace git

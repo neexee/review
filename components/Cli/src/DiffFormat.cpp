@@ -132,36 +132,35 @@ std::string ToString(const git::AnnotatedDiffPtr& diff, const diff::PrintOptions
 	return printer_state.stream.str();
 }
 
-void PrintDelta(const git::AnnotatedDiffDelta& delta, PrinterState& printer)
+void PrintDelta(const git::AnnotatedDiffDeltaPtr& delta, PrinterState& printer)
 {
 	PrintDeltaHeader(delta, printer);
-	for (const auto& line : delta.Lines())
+	for (const auto& line : delta->Lines())
 	{
 		PrintLine(line, printer);
 	}
 }
 
-void PrintDeltaHeader(const git::AnnotatedDiffDelta& delta, PrinterState& printer)
+void PrintDeltaHeader(const git::AnnotatedDiffDeltaPtr& delta, PrinterState& printer)
 {
-	printer.stream << "--- " << delta.OldFile().Path() << std::endl;
-	printer.stream << "+++ " << delta.NewFile().Path() << std::endl;
+	printer.stream << "--- " << delta->OldFile().Path() << std::endl;
+	printer.stream << "+++ " << delta->NewFile().Path() << std::endl;
 }
 
-void PrintLine(const git::AnnotatedDiffLine& line, PrinterState& printer)
+void PrintLine(const git::AnnotatedDiffLinePtr& line, PrinterState& printer)
 {
-	ControlSymbol symbol = line_status_map.at(git::ToChar(line.LineType()));
+	ControlSymbol symbol = line_status_map.at(git::ToChar(line->LineType()));
 	PrintControlSymbol(&printer, symbol);
 
-	if (line.LineType() == git::DiffLineType::Context ||
-	    line.LineType() == git::DiffLineType::Addition ||
-	    line.LineType() == git::DiffLineType::Deletion)
+	if (line->LineType() == git::DiffLineType::Context ||
+	    line->LineType() == git::DiffLineType::Addition ||
+	    line->LineType() == git::DiffLineType::Deletion)
 	{
-		printer.stream << git::ToChar(line.LineType());
+		printer.stream << git::ToChar(line->LineType());
 	}
-	auto commit_id = line.CommitId();
-	git::Commit commit(commit_id, line.Blame()->Repo());
-	printer.stream << commit_id.ShortHex() << " [" << commit.Summary() << "] "
-	               << line.Content();
+	git::CommitPtr commit = line->Commit();
+	printer.stream << commit->Id().ShortHex() << " [" << commit->Summary() << "] "
+	               << line->Content();
 }
 
 } // namespace diff

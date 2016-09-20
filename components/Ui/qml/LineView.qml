@@ -17,6 +17,14 @@ Component {
             }
         }
         Rectangle {
+            Layout.fillHeight: true
+            Layout.preferredWidth: 80
+            color: lineRectangle.color
+            Text {
+                text: model.modelData.commit.Summary()
+            }
+        }
+        Rectangle {
             id: lineRectangle
             Layout.fillHeight: true
             Layout.fillWidth: true

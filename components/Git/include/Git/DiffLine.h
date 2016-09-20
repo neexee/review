@@ -2,6 +2,8 @@
 #include <string>
 #include <git2.h>
 
+#include <Git/Commit.h>
+
 namespace git {
 
 enum class DiffLineType
