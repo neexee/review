@@ -15,8 +15,8 @@
 void PrintUsage();
 void RegisterTypes();
 void InitEngine(QQmlApplicationEngine& engine,
-    review::Review& review,
-    review::FileTreeModel& file_tree_model);
+	review::Review& review,
+	review::FileTreeModel& file_tree_model);
 void ShowMainWindow(QQmlApplicationEngine& engine);
 
 int main(int argc, char* argv[])
@@ -45,8 +45,8 @@ int main(int argc, char* argv[])
 }
 
 void InitEngine(QQmlApplicationEngine& engine,
-    review::Review& review,
-    review::FileTreeModel& file_tree_model)
+	review::Review& review,
+	review::FileTreeModel& file_tree_model)
 {
 	RegisterTypes();
 	file_tree_model.SetPaths(review.Diff()->Paths());

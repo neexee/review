@@ -23,9 +23,9 @@ void FileTreeModel::SetPaths(QVector<QString> paths)
 		auto path_parts = utils::SplitPath(path.toStdString());
 		std::deque<QString> q_path_parts;
 		std::transform(path_parts.begin(),
-		    path_parts.end(),
-		    std::back_inserter(q_path_parts),
-		    [](auto& part) { return QString::fromStdString(part); });
+			path_parts.end(),
+			std::back_inserter(q_path_parts),
+			[](auto& part) { return QString::fromStdString(part); });
 		root_->AddChildrenRecursively(q_path_parts);
 	}
 	emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
@@ -55,8 +55,8 @@ QVariant FileTreeModel::data(const QModelIndex& index, int role) const
 }
 
 QVariant FileTreeModel::headerData(int /*section*/,
-    Qt::Orientation orientation,
-    int role) const
+	Qt::Orientation orientation,
+	int role) const
 {
 	if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
 		return root_->Data();

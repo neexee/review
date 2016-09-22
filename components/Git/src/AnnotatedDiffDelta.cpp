@@ -5,8 +5,8 @@
 namespace git {
 
 AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta,
-    const TreePtr& new_tree,
-    const TreePtr& old_tree)
+	const TreePtr& new_tree,
+	const TreePtr& old_tree)
 : DiffDelta(delta)
 {
 	auto repo = new_tree->Repo();
@@ -19,7 +19,7 @@ AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta,
 	else
 	{
 		old_blame =
-		    std::make_shared<Blame>(delta.OldFile().Path(), repo, old_tree->CommitId());
+			std::make_shared<Blame>(delta.OldFile().Path(), repo, old_tree->CommitId());
 	}
 
 	std::shared_ptr<Blame> new_blame;
@@ -30,7 +30,7 @@ AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta,
 	else
 	{
 		new_blame =
-		    std::make_shared<Blame>(delta.NewFile().Path(), repo, new_tree->CommitId());
+			std::make_shared<Blame>(delta.NewFile().Path(), repo, new_tree->CommitId());
 	}
 
 	for (const auto& line : delta.Lines())

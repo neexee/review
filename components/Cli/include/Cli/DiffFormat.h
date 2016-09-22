@@ -10,11 +10,11 @@ namespace diff {
 
 enum class Format
 {
-	Patch,       // full git diff
-	PatchHeader, // just the file headers of patch
-	Raw,         // like git diff --raw
-	NameOnly,    // like git diff --name-only
-	NameStatus   // like git diff --name-status
+	Patch,
+	PatchHeader,
+	Raw,
+	NameOnly,
+	NameStatus
 };
 
 enum class Appearance
@@ -52,9 +52,9 @@ struct PrinterState
 };
 
 int ColorPrinter(const git_diff_delta* delta,
-    const git_diff_hunk* hunk,
-    const git_diff_line* line,
-    void* data);
+	const git_diff_hunk* hunk,
+	const git_diff_line* line,
+	void* data);
 void PrintControlSymbol(PrinterState* state, ControlSymbol symbol);
 void PrintLine(const git_diff_line* line, std::stringstream& stream);
 git_diff_format_t FormatToInt(Format format);

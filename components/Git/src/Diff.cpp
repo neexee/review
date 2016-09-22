@@ -7,20 +7,20 @@
 namespace git {
 
 Diff::Diff(const RepoPtr& repo,
-    const Treeish& first,
-    const Treeish& second,
-    const DiffOptions& diffopts)
+	const Treeish& first,
+	const Treeish& second,
+	const DiffOptions& diffopts)
 : Diff(repo,
-      std::make_shared<Tree>(repo, first),
-      std::make_shared<Tree>(repo, second),
-      diffopts)
+	  std::make_shared<Tree>(repo, first),
+	  std::make_shared<Tree>(repo, second),
+	  diffopts)
 {
 }
 
 Diff::Diff(const RepoPtr& repo,
-    const TreePtr& old_tree,
-    const TreePtr& new_tree,
-    const DiffOptions& options)
+	const TreePtr& old_tree,
+	const TreePtr& new_tree,
+	const DiffOptions& options)
 : diff_(nullptr)
 , repo_(repo)
 , options_(options)
@@ -29,14 +29,14 @@ Diff::Diff(const RepoPtr& repo,
 , old_tree_(old_tree)
 {
 	auto message = "failed to diff trees " + old_tree->Id().ShortHex() + " and " +
-	               new_tree->Id().ShortHex();
+				   new_tree->Id().ShortHex();
 	CheckSuccess(message,
-	    git_diff_tree_to_tree,
-	    &diff_,
-	    repo->Pointer(),
-	    old_tree->Pointer(),
-	    new_tree->Pointer(),
-	    &options.diffopts_);
+		git_diff_tree_to_tree,
+		&diff_,
+		repo->Pointer(),
+		old_tree->Pointer(),
+		new_tree->Pointer(),
+		&options.diffopts_);
 
 	Init();
 }
@@ -69,11 +69,11 @@ Diff::~Diff()
 void Diff::Init()
 {
 	git_diff_foreach(diff_,
-	    callback::MakeCallback(&Diff::OnFile, this),
-	    callback::MakeCallback(&Diff::OnBinary, this),
-	    callback::MakeCallback(&Diff::OnHunk, this),
-	    callback::MakeCallback(&Diff::OnLine, this),
-	    nullptr);
+		callback::MakeCallback(&Diff::OnFile, this),
+		callback::MakeCallback(&Diff::OnBinary, this),
+		callback::MakeCallback(&Diff::OnHunk, this),
+		callback::MakeCallback(&Diff::OnLine, this),
+		nullptr);
 }
 
 int Diff::OnFile(const git_diff_delta* delta, float /*progress*/, void* /*payload*/)
@@ -83,16 +83,16 @@ int Diff::OnFile(const git_diff_delta* delta, float /*progress*/, void* /*payloa
 }
 
 int Diff::OnHunk(const git_diff_delta* /*delta*/,
-    const git_diff_hunk* /*hunk*/,
-    void* /*payload*/)
+	const git_diff_hunk* /*hunk*/,
+	void* /*payload*/)
 {
 	return 0;
 }
 
 int Diff::OnLine(const git_diff_delta* /*delta*/,
-    const git_diff_hunk* /*hunk*/,
-    const git_diff_line* line,
-    void* /*payload*/)
+	const git_diff_hunk* /*hunk*/,
+	const git_diff_line* line,
+	void* /*payload*/)
 {
 	auto& current_delta = deltas_.back();
 	current_delta.AddLine(DiffLine(line));
@@ -100,8 +100,8 @@ int Diff::OnLine(const git_diff_delta* /*delta*/,
 }
 
 int Diff::OnBinary(const git_diff_delta* /*delta*/,
-    const git_diff_binary* /*binary*/,
-    void* /*payload*/)
+	const git_diff_binary* /*binary*/,
+	void* /*payload*/)
 {
 	return 0;
 }

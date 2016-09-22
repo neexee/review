@@ -56,7 +56,7 @@ template <class R, class C, class... FArgs, class... Args>
 auto PlaceholderInsertingBind(R (C::*func)(FArgs...), Args&&... args)
 {
 	return detail::PlaceholderInsertingBind(
-	    BuildIndices<sizeof...(FArgs)>{}, func, std::forward<Args>(args)...);
+		BuildIndices<sizeof...(FArgs)>{}, func, std::forward<Args>(args)...);
 }
 
 template <class Caller, class Ret, class... FArgs>

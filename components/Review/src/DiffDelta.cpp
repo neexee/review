@@ -9,8 +9,8 @@ DiffDelta::DiffDelta(const git::AnnotatedDiffDeltaPtr& delta)
 {
 	auto git_lines = delta_->Lines();
 	std::transform(
-	    git_lines.begin(), git_lines.end(), std::back_inserter(lines_), [this](auto& line) {
-		    return std::make_shared<DiffLine>(line);
+		git_lines.begin(), git_lines.end(), std::back_inserter(lines_), [this](auto& line) {
+			return std::make_shared<DiffLine>(line);
 		});
 }
 

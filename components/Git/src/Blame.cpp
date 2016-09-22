@@ -19,11 +19,11 @@ Blame::Blame(const std::string& path, const git::RepoPtr& repo, const ObjectId& 
 	git_blame_options blame_options = GIT_BLAME_OPTIONS_INIT;
 	blame_options.newest_commit = commit_oid.Oid();
 	CheckSuccess("failed to blame " + path,
-	    git_blame_file,
-	    &blame_,
-	    repo->Pointer(),
-	    path.c_str(),
-	    &blame_options);
+		git_blame_file,
+		&blame_,
+		repo->Pointer(),
+		path.c_str(),
+		&blame_options);
 
 	auto hunk_count = git_blame_get_hunk_count(blame_);
 	for (decltype(hunk_count) hunk_number = 0; hunk_number < hunk_count; ++hunk_number)

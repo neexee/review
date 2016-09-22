@@ -62,11 +62,11 @@ std::string ToString(const git::DiffPtr& diff, const PrintOptions& options)
 	PrinterState printer_state(options);
 
 	git::CheckSuccess("displaying diff ",
-	    git_diff_print,
-	    *(diff->Pointer()),
-	    FormatToInt(options.format),
-	    &diff::ColorPrinter,
-	    &printer_state);
+		git_diff_print,
+		*(diff->Pointer()),
+		FormatToInt(options.format),
+		&diff::ColorPrinter,
+		&printer_state);
 
 	if (options.appearance == Appearance::Colorized)
 		printer_state.stream << control_symbol_map.at(ControlSymbol::Reset);
@@ -74,9 +74,9 @@ std::string ToString(const git::DiffPtr& diff, const PrintOptions& options)
 }
 
 int ColorPrinter(const git_diff_delta* /*delta*/,
-    const git_diff_hunk* /*hunk*/,
-    const git_diff_line* line,
-    void* payload)
+	const git_diff_hunk* /*hunk*/,
+	const git_diff_line* line,
+	void* payload)
 {
 	PrinterState* state = static_cast<PrinterState*>(payload);
 	ControlSymbol symbol = line_status_map.at(line->origin);
@@ -106,7 +106,7 @@ void PrintControlSymbol(PrinterState* state, ControlSymbol symbol)
 void PrintLine(const git_diff_line* line, std::stringstream& stream)
 {
 	if (line->origin == GIT_DIFF_LINE_CONTEXT || line->origin == GIT_DIFF_LINE_ADDITION ||
-	    line->origin == GIT_DIFF_LINE_DELETION)
+		line->origin == GIT_DIFF_LINE_DELETION)
 	{
 		stream << line->origin;
 	}
@@ -153,14 +153,14 @@ void PrintLine(const git::AnnotatedDiffLinePtr& line, PrinterState& printer)
 	PrintControlSymbol(&printer, symbol);
 
 	if (line->LineType() == git::DiffLineType::Context ||
-	    line->LineType() == git::DiffLineType::Addition ||
-	    line->LineType() == git::DiffLineType::Deletion)
+		line->LineType() == git::DiffLineType::Addition ||
+		line->LineType() == git::DiffLineType::Deletion)
 	{
 		printer.stream << git::ToChar(line->LineType());
 	}
 	git::CommitPtr commit = line->Commit();
 	printer.stream << commit->Id().ShortHex() << " [" << commit->Summary() << "] "
-	               << line->Content();
+				   << line->Content();
 }
 
 } // namespace diff

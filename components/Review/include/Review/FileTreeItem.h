@@ -18,6 +18,7 @@ public:
 
 	void AddChild(const FileTreeItemPtr& child);
 	void AddChildrenRecursively(std::deque<QString> path_parts);
+
 	const FileTreeItemPtr Child(int row);
 	int ChildNumber() const;
 	int ColumnNumber() const;

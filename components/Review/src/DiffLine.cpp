@@ -20,7 +20,7 @@ DiffLine::LineType DiffLine::GetLineType() const
 {
 	using LT = git::DiffLineType;
 	static auto line_type_map = std::map<LT, LineType>{
-	    {LT::Context, Context}, {LT::Addition, Addition}, {LT::Deletion, Deletion}};
+		{LT::Context, Context}, {LT::Addition, Addition}, {LT::Deletion, Deletion}};
 
 	auto type = line_type_map.find(line_->LineType());
 	if (type != line_type_map.end())

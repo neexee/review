@@ -18,7 +18,7 @@ void CheckSuccess(std::string message, Function libgit2_function, Args&&... args
 		libgit2spacer = " - ";
 	}
 	auto error_message = utils::string_format(
-	    "%s [%d]%s%s\n", message.c_str(), error, libgit2spacer, libgit2msg);
+		"%s [%d]%s%s\n", message.c_str(), error, libgit2spacer, libgit2msg);
 	throw GitError(error_message);
 }
 
