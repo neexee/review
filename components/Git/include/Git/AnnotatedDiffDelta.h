@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include "AnnotatedDiffLine.h"
+#include "Blame.h"
+#include "Commit.h"
 #include "DiffDelta.h"
 #include "Tree.h"
 
@@ -15,6 +17,9 @@ public:
 	AnnotatedDiffLines Lines() const;
 
 private:
+	CommitPtr FindCommit(const DiffLine& line,
+		const BlamePtr& old_blame,
+		const BlamePtr& new_blame);
 	AnnotatedDiffLines lines_;
 };
 

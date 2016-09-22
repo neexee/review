@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include <git2.h>
+#include "DiffFile.h"
 #include "DiffLine.h"
-#include "Object.h"
 
 namespace git {
 
@@ -25,20 +25,6 @@ enum class DeltaStatus
 DeltaStatus ToDeltaStatus(int status);
 
 //////////////////////////////////////////////////////////////////////////////
-
-class DiffFile
-{
-public:
-	DiffFile();
-	explicit DiffFile(const git_diff_file& diff_file);
-
-	std::string Path() const;
-	ObjectId Id() const;
-
-private:
-	std::string path_;
-	ObjectId oid_;
-};
 
 class DiffDelta
 {

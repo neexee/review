@@ -10,43 +10,27 @@ AnnotatedDiffDelta::AnnotatedDiffDelta(const DiffDelta& delta,
 : DiffDelta(delta)
 {
 	auto repo = new_tree->Repo();
-
-	std::shared_ptr<Blame> old_blame;
-	if (delta.Status() == DeltaStatus::Added)
-	{
-		old_blame = std::make_shared<Blame>(repo, old_tree->CommitId());
-	}
-	else
-	{
-		old_blame =
-			std::make_shared<Blame>(delta.OldFile().Path(), repo, old_tree->CommitId());
-	}
-
-	std::shared_ptr<Blame> new_blame;
-	if (delta.Status() == DeltaStatus::Deleted)
-	{
-		new_blame = std::make_shared<Blame>(repo, new_tree->CommitId());
-	}
-	else
-	{
-		new_blame =
-			std::make_shared<Blame>(delta.NewFile().Path(), repo, new_tree->CommitId());
-	}
+	auto old_blame = std::make_shared<Blame>(OldFile(), repo, old_tree->CommitId());
+	auto new_blame = std::make_shared<Blame>(NewFile(), repo, new_tree->CommitId());
 
 	for (const auto& line : delta.Lines())
 	{
-		auto line_type = line.LineType();
-		CommitPtr commit;
-		if (line_type == DiffLineType::Deletion || line_type == DiffLineType::DeletionEOF)
-		{
-			commit = old_blame->FindCommitByLine(line.OldNumber());
-		}
-		else
-		{
-			commit = new_blame->FindCommitByLine(line.NewNumber());
-		}
-		lines_.emplace_back(line, commit);
+		auto commit = FindCommit(line, old_blame, new_blame);
+		lines_.push_back(std::make_shared<AnnotatedDiffLine>(line, commit));
 	}
+}
+
+CommitPtr AnnotatedDiffDelta::FindCommit(const DiffLine& line,
+	const BlamePtr& old_blame,
+	const BlamePtr& new_blame)
+{
+	auto line_type = line.LineType();
+
+	if (line_type == DiffLineType::Deletion || line_type == DiffLineType::DeletionEOF)
+	{
+		return old_blame->FindCommitByLine(line.OldNumber());
+	}
+	return new_blame->FindCommitByLine(line.NewNumber());
 }
 
 AnnotatedDiffLines AnnotatedDiffDelta::Lines() const

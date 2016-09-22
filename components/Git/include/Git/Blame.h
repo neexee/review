@@ -6,11 +6,12 @@
 
 namespace git {
 
+class DiffFile;
+
 class Blame
 {
 public:
-	Blame(const RepoPtr& repo, const ObjectId& commit_oid);
-	Blame(const std::string& path, const RepoPtr& repo, const ObjectId& commit_oid);
+	Blame(const DiffFile& file, const RepoPtr& repo, const ObjectId& commit_oid);
 
 	Blame(const Blame& other) = delete;
 	Blame& operator=(const Blame&) = delete;

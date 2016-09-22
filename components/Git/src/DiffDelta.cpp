@@ -74,19 +74,23 @@ DiffFile::DiffFile()
 }
 
 DiffFile::DiffFile(const git_diff_file& diff_file)
-: path_(diff_file.path)
-, oid_(diff_file.id)
+: diff_file_(diff_file)
 {
 }
 
 std::string DiffFile::Path() const
 {
-	return path_;
+	return diff_file_.path;
 }
 
 ObjectId DiffFile::Id() const
 {
-	return oid_;
+	return ObjectId(diff_file_.id);
+}
+
+bool DiffFile::Exists() const
+{
+	return diff_file_.flags && GIT_DIFF_FLAG_EXISTS;
 }
 
 } // namespace git
