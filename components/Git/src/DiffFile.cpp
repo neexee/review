@@ -23,7 +23,7 @@ ObjectId DiffFile::Id() const
 
 bool DiffFile::Exists() const
 {
-	return diff_file_.flags == GIT_DIFF_FLAG_EXISTS;
+	return diff_file_.flags & GIT_DIFF_FLAG_EXISTS;
 }
 
 } // namespace git
