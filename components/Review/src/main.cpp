@@ -8,7 +8,6 @@
 #include <Review/DiffDelta.h>
 #include <Review/DiffLine.h>
 #include <Review/DiffModel.h>
-#include <Review/DiffView.h>
 #include <Review/FileTreeModel.h>
 #include <Review/Review.h>
 
@@ -65,7 +64,6 @@ void ShowMainWindow(QQmlApplicationEngine& engine)
 
 void RegisterTypes()
 {
-	qmlRegisterType<review::DiffView>("diffview", 1, 0, "DiffView");
 	qmlRegisterType<review::Review>("review", 1, 0, "Review");
 	qmlRegisterType<review::FileTreeModel>("filetreemodel", 1, 0, "FileTreeModel");
 	qmlRegisterType<review::DiffModel>();

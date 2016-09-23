@@ -3,7 +3,6 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
 import QtQuick.Window 2.1
-import diffview 1.0
 import review 1.0
 import filetreemodel 1.0
 
