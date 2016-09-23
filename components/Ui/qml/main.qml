@@ -4,8 +4,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
 import QtQuick.Window 2.1
 import review 1.0
-import filetreemodel 1.0
-
 
 ApplicationWindow {
     width: 640

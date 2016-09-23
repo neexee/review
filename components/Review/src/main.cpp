@@ -65,9 +65,6 @@ void ShowMainWindow(QQmlApplicationEngine& engine)
 void RegisterTypes()
 {
 	qmlRegisterType<review::Review>("review", 1, 0, "Review");
-	qmlRegisterType<review::FileTreeModel>("filetreemodel", 1, 0, "FileTreeModel");
-	qmlRegisterType<review::DiffModel>();
-	qmlRegisterType<review::DiffDelta>();
 	qmlRegisterType<review::DiffLine>("diffline", 1, 0, "DiffLine");
 }
 
