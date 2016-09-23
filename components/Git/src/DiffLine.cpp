@@ -52,12 +52,12 @@ std::string DiffLine::Content() const
 	return content_;
 }
 
-DiffLineType ToLineType(char line_type)
+DiffLineType DiffLine::ToLineType(char line_type)
 {
 	return line_type_map.at(line_type);
 }
 
-char ToChar(DiffLineType line_type)
+char DiffLine::ToChar(DiffLineType line_type)
 {
 	for (const auto& kv : line_type_map)
 	{

@@ -27,13 +27,13 @@ public:
 	std::string Content() const;
 
 private:
+	DiffLineType ToLineType(char line_type);
+	char ToChar(DiffLineType line_type);
+
 	int old_lineno_;
 	int new_lineno_;
 	DiffLineType line_type_;
 	std::string content_;
 };
-
-DiffLineType ToLineType(char line_type);
-char ToChar(DiffLineType line_type);
 
 } // namespace git
