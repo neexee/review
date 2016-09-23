@@ -22,10 +22,6 @@ enum class DeltaStatus
 	Conflicted
 };
 
-DeltaStatus ToDeltaStatus(int status);
-
-//////////////////////////////////////////////////////////////////////////////
-
 class DiffDelta
 {
 public:
@@ -40,6 +36,8 @@ public:
 	void AddLine(const DiffLine& line);
 
 private:
+	DeltaStatus ToDeltaStatus(int status);
+
 	DeltaStatus status_;
 	DiffFile old_file_;
 	DiffFile new_file_;
