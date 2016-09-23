@@ -13,18 +13,15 @@ namespace review {
 class DiffModel : public QObject
 {
 	Q_OBJECT
-	Q_PROPERTY(QString text READ Text NOTIFY TextChanged)
 	Q_PROPERTY(QVector<QString> paths READ Paths NOTIFY PathsChanged)
 	Q_PROPERTY(QList<QObject*> deltas READ Deltas NOTIFY DeltasChanged)
 
 public:
 	DiffModel(const std::string& from, const std::string& to, const std::string& repo);
-	QString Text() const;
 	QVector<QString> Paths() const;
 	QList<QObject*> Deltas();
 
 Q_SIGNALS:
-	void TextChanged();
 	void PathsChanged();
 	void DeltasChanged();
 

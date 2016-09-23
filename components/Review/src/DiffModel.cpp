@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <Cli/DiffFormat.h>
 #include <Git/AnnotatedDiff.h>
 #include <Review/DiffDelta.h>
 #include <Review/DiffModel.h>
@@ -30,15 +29,6 @@ QVector<QString> DiffModel::Paths() const
 			return QString::fromStdString(delta->NewFile().Path());
 		});
 	return file_paths;
-}
-
-QString DiffModel::Text() const
-{
-	namespace cd = cliutils::diff;
-	cd::PrintOptions options{cd::Format::Patch, cd::Appearance::Plain};
-
-	auto text = cd::ToString(adiff_, options);
-	return QString::fromStdString(text);
 }
 
 QList<QObject*> DiffModel::Deltas()

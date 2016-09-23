@@ -1,4 +1,3 @@
-#include <Cli/DiffFormat.h>
 #include <Git/Diff.h>
 #include <Git/Repo.h>
 

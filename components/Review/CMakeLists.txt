@@ -11,7 +11,6 @@ set(${PROJECT_NAME}_INCLUDE_DIR
 
 include_directories(${review_INCLUDE_DIR}
 					${Utils_INCLUDE_DIR}
-					${Cli_INCLUDE_DIR}
 					${Git_INCLUDE_DIR})
 
 
@@ -26,4 +25,4 @@ qt5_wrap_cpp(review_moc ${HEADER_FILES})
 
 add_executable(${PROJECT_NAME} ${CPP_FILES} ${HEADER_FILES} ${review_moc} ${RESOURCES})
 qt5_use_modules(${PROJECT_NAME} Widgets Qml)
-target_link_libraries(${PROJECT_NAME} Cli Utils Git Qt5::Widgets Qt5::Quick)
+target_link_libraries(${PROJECT_NAME} Utils Git Qt5::Widgets Qt5::Quick)
