@@ -13,4 +13,5 @@ std::string string_format(const std::string& format, Args... args)
 	snprintf(buf.get(), size, format.c_str(), args...);
 	return std::string(buf.get(), buf.get() + size - 1);
 }
-}
+
+} // namespace utils
