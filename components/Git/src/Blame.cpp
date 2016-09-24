@@ -10,7 +10,7 @@ Blame::Blame(const DiffFile& file, const git::RepoPtr& repo, const ObjectId& com
 , repo_(repo)
 , commit_id_(commit_oid)
 {
-	if (file.Exists())
+	if (!file.Exists())
 	{
 		return;
 	}
