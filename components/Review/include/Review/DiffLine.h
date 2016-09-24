@@ -16,6 +16,7 @@ class DiffLine : public QObject
 public:
 	DiffLine();
 	DiffLine(git::AnnotatedDiffLinePtr& line);
+
 	enum LineType
 	{
 		Addition,

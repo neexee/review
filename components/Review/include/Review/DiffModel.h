@@ -1,9 +1,9 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <QAbstractItemModel>
 #include <QString>
 #include <QVector>
-
 #include <Git/AnnotatedDiff.h>
 #include <Review/Commit.h>
 #include <Review/DiffDelta.h>

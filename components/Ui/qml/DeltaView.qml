@@ -1,32 +1,75 @@
 import QtQuick 2.1
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles 1.2
 
 Component {
     Column {
         width: parent.width
-        spacing: 2
+        spacing: 0
         Rectangle {
             height: 25
             width: parent.width
             color: "#204a87"
             border.color: "#729fcf"
+            
             Text {
                 anchors.centerIn: parent
-                text: modelData.path
+                text: modelData.Path()
                 color: "white"
             }
         }
-        Rectangle {
-            height: fileView.count * 20
+
+        TableView {
+            id: fileDiffView
+            property var rowHeight: 17
+
+            model: modelData
+
+            frameVisible: false
+            headerVisible: false
+            height : rowCount * rowHeight // TODO Use TextMetrics for rowHeight calculation
             width: parent.width
-            ListView {
-                id: fileView
-                anchors.fill: parent
-                orientation: Qt.Vertical
-                model: modelData.diffLines
-                delegate: lineDelegate
+
+            style: TableViewStyle {
+                itemDelegate: LineView {
+                }
+                rowDelegate: Component {
+                    Rectangle {
+                        height: fileDiffView.rowHeight
+                    }
+                }
             }
-            LineView {
-                id: lineDelegate
+
+            TableViewColumn {
+                id: rowColumn
+                title: "Row"
+                role: "rowNumber"
+                movable: false
+                resizable: true
+                width: 20
+            }
+            TableViewColumn {
+                id: infoColumn
+                title: "Info"
+                role: "commitInfo"
+                movable: false
+                resizable: true
+                width:  fileDiffView.viewport.width / 7
+            }
+            TableViewColumn {
+                id: textColumn
+                title: "Text"
+                role: "text"
+                movable: false
+                resizable: true
+                width: fileDiffView.viewport.width - rowColumn.width - infoColumn.width
+            }
+
+            Component.onCompleted: {
+                rowColumn.resizeToContents()
+                infoColumn.resizeToContents()
+                textColumn.resizeToContents()
             }
         }
     }

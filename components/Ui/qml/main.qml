@@ -78,6 +78,7 @@ ApplicationWindow {
             anchors.fill: parent
             orientation: Qt.Horizontal
             Rectangle {
+                id: fileTree
                 width: 200
                 TreeView {
                     model: fileTreeModel
@@ -88,19 +89,22 @@ ApplicationWindow {
                     }
                 }
             }
-            Rectangle {
-                ListView {
-                    anchors.fill: parent
-                    orientation: Qt.Vertical
-                    model: review.diff.deltas
-                    delegate: deltaView
-                    onFlickStarted: ListView.verticalVelocity = 10000
-                    maximumFlickVelocity: 10000
-                    flickDeceleration: 10000
+
+            ListView {
+                id: deltaListView
+                anchors.left: fileTree.right
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                orientation: Qt.Vertical
+
+                model: review.diff.deltas
+                delegate: DeltaView {
                 }
-                DeltaView {
-                    id: deltaView
-                }
+
+                onFlickStarted: ListView.verticalVelocity = 10000
+                maximumFlickVelocity: 10000
+                flickDeceleration: 10000
             }
         }
     }
