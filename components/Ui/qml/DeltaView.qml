@@ -8,17 +8,21 @@ Component {
         width: parent.width
         spacing: 0
 
-        Rectangle {
-            height: 25
+        TextArea {
+            height: review.fixedFont.height * 2
             width: parent.width
-            color: "#204a87"
-            border.color: "#729fcf"
-            
-            Text {
-                anchors.centerIn: parent
-                text: modelData.Path()
-                color: "white"
+            horizontalAlignment: TextEdit.AlignHCenter
+            text: modelData.Path()
+            readOnly: true
+
+            style: TextAreaStyle {
+                font: review.fixedFont.font
+                textColor: "white"
+                selectionColor: "steelblue"
+                selectedTextColor: "#eee"
+                backgroundColor: "#204a87"
             }
+
         }
 
         TableView {
