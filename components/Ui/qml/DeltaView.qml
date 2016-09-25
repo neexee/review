@@ -1,4 +1,4 @@
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.2
@@ -7,6 +7,7 @@ Component {
     Column {
         width: parent.width
         spacing: 0
+
         Rectangle {
             height: 25
             width: parent.width
@@ -22,14 +23,15 @@ Component {
 
         TableView {
             id: fileDiffView
-            property var rowHeight: 17
-
-            model: modelData
+            property var reviewFont: review.fixedFont
+            property var rowHeight: reviewFont.height
 
             frameVisible: false
             headerVisible: false
-            height : rowCount * rowHeight // TODO Use TextMetrics for rowHeight calculation
+            height : rowCount * rowHeight
             width: parent.width
+
+            model: modelData
 
             style: TableViewStyle {
                 itemDelegate: LineView {
@@ -55,6 +57,7 @@ Component {
                 role: "commitInfo"
                 movable: false
                 resizable: true
+                elideMode: Text.ElideMiddle
                 width:  fileDiffView.viewport.width / 7
             }
             TableViewColumn {
@@ -63,13 +66,13 @@ Component {
                 role: "text"
                 movable: false
                 resizable: true
+                objectName: "textColumn"
                 width: fileDiffView.viewport.width - rowColumn.width - infoColumn.width
             }
 
             Component.onCompleted: {
                 rowColumn.resizeToContents()
                 infoColumn.resizeToContents()
-                textColumn.resizeToContents()
             }
         }
     }

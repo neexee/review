@@ -1,4 +1,4 @@
-import QtQuick 2.1
+import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
@@ -70,10 +70,22 @@ ApplicationWindow {
     }
 
     Review {
-        id: reviewId
-        anchors.fill: parent
-        objectName: "review"
+        id: review
+        property var fixedFont: fixedFontMetrics
         onDiffChanged: fileTreeModel.paths = review.diff.paths
+        objectName: "cppReview"
+        anchors.fill: parent
+
+        FontLoader {
+            id: fixedFontLoader
+            name: "Monospace"
+        }
+        FontMetrics {
+            id: fixedFontMetrics
+            font.family: fixedFontLoader.name
+            font.pointSize: 10
+        }
+
         SplitView {
             anchors.fill: parent
             orientation: Qt.Horizontal
@@ -92,16 +104,17 @@ ApplicationWindow {
 
             ListView {
                 id: deltaListView
+
                 anchors.left: fileTree.right
                 anchors.top: parent.top
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 orientation: Qt.Vertical
 
-                model: review.diff.deltas
+                model: cppReview.diff.deltas
+
                 delegate: DeltaView {
                 }
-
                 onFlickStarted: ListView.verticalVelocity = 10000
                 maximumFlickVelocity: 10000
                 flickDeceleration: 10000

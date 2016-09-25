@@ -42,7 +42,7 @@ void InitEngine(QQmlApplicationEngine& engine,
 	RegisterTypes();
 	file_tree_model.SetPaths(review.Diff()->Paths());
 
-	engine.rootContext()->setContextProperty("review", &review);
+	engine.rootContext()->setContextProperty("cppReview", &review);
 	engine.rootContext()->setContextProperty("fileTreeModel", &file_tree_model);
 	engine.load(QUrl("qrc:/qml/main.qml"));
 }
