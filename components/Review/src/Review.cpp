@@ -9,8 +9,10 @@ Review::Review()
 {
 }
 
-Review::Review(const std::string& from, const std::string& to, const std::string& repo)
-: diff_(std::make_shared<DiffModel>(from, to, repo))
+Review::Review(const cli::Options& options)
+: diff_(std::make_shared<DiffModel>(options.CommitFrom(),
+	  options.CommitTo(),
+	  options.RepoPath()))
 {
 	emit DiffChanged(diff_.get());
 }

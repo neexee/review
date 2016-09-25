@@ -4,6 +4,7 @@
 #include <QtQuick/QQuickView>
 #include <QtWidgets/QApplication>
 
+#include <Cli/Options.h>
 #include <Review/Commit.h>
 #include <Review/DiffDelta.h>
 #include <Review/DiffLine.h>
@@ -11,7 +12,7 @@
 #include <Review/FileTreeModel.h>
 #include <Review/Review.h>
 
-void PrintUsage();
+cli::Options HandleOptions(int argc, char** argv);
 void RegisterTypes();
 void InitEngine(QQmlApplicationEngine& engine,
 	review::Review& review,
@@ -20,17 +21,8 @@ void ShowMainWindow(QQmlApplicationEngine& engine);
 
 int main(int argc, char* argv[])
 {
-	if (argc < 4)
-	{
-		PrintUsage();
-		return -1;
-	}
-
-	auto repo_path = std::string(argv[1]);
-	auto from_commitish = std::string(argv[2]);
-	auto to_commitish = std::string(argv[3]);
-
-	review::Review review{from_commitish, to_commitish, repo_path};
+	cli::Options options = HandleOptions(argc, argv);
+	review::Review review{options};
 	review::FileTreeModel file_tree_model;
 
 	QApplication app(argc, argv);
@@ -68,7 +60,15 @@ void RegisterTypes()
 	qmlRegisterType<review::DiffLine>("diffline", 1, 0, "DiffLine");
 }
 
-void PrintUsage()
+cli::Options HandleOptions(int argc, char** argv)
 {
-	std::cerr << "Usage: review commit commit repo_path" << std::endl;
+	try
+	{
+		return cli::Options(argc, argv);
+	}
+	catch (cli::OptionParseError& err)
+	{
+		std::cerr << err.what() << std::endl;
+		exit(EXIT_FAILURE);
+	}
 }

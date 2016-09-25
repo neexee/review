@@ -14,8 +14,9 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${_warnings}")
 
 set(COMPONENTS_DIR components)
 # Add internal libraries
-add_subdirectory(${COMPONENTS_DIR}/Utils)
+add_subdirectory(${COMPONENTS_DIR}/Cli)
 add_subdirectory(${COMPONENTS_DIR}/Git)
+add_subdirectory(${COMPONENTS_DIR}/Utils)
 
 # Add executable
 add_subdirectory(${COMPONENTS_DIR}/Ui)

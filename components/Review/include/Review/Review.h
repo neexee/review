@@ -1,5 +1,6 @@
 #pragma once
 #include <QtQuick/QQuickItem>
+#include <Cli/Options.h>
 #include <Git/AnnotatedDiff.h>
 #include <Review/DiffModel.h>
 
@@ -12,7 +13,7 @@ class Review : public QQuickItem
 
 public:
 	Review();
-	Review(const std::string& from, const std::string& to, const std::string& repo);
+	Review(const cli::Options& options);
 
 	DiffModel* Diff() const;
 
