@@ -22,7 +22,6 @@ Component {
                 selectedTextColor: "#eee"
                 backgroundColor: "#204a87"
             }
-
         }
 
         TableView {
@@ -53,7 +52,6 @@ Component {
                 role: "rowNumber"
                 movable: false
                 resizable: true
-                width: 20
             }
             TableViewColumn {
                 id: infoColumn
@@ -61,8 +59,7 @@ Component {
                 role: "commitInfo"
                 movable: false
                 resizable: true
-                elideMode: Text.ElideMiddle
-                width:  fileDiffView.viewport.width / 7
+                width: fileDiffView.viewport.width/7 - rowColumn.width
             }
             TableViewColumn {
                 id: textColumn
@@ -76,7 +73,7 @@ Component {
 
             Component.onCompleted: {
                 rowColumn.resizeToContents()
-                infoColumn.resizeToContents()
+                //infoColumn.resizeToContents()
             }
         }
     }
