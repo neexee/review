@@ -45,14 +45,6 @@ Component {
                     }
                 }
             }
-
-            TableViewColumn {
-                id: rowColumn
-                title: "Row"
-                role: "rowNumber"
-                movable: false
-                resizable: true
-            }
             TableViewColumn {
                 id: infoColumn
                 title: "Info"
@@ -61,6 +53,15 @@ Component {
                 resizable: true
                 width: fileDiffView.viewport.width/7 - rowColumn.width
             }
+
+            TableViewColumn {
+                id: rowColumn
+                title: "Row"
+                role: "rowNumber"
+                movable: false
+                resizable: true
+            }
+
             TableViewColumn {
                 id: textColumn
                 title: "Text"

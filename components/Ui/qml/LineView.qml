@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.0
 import diffline 1.0
 
 Rectangle {
-    border.width: 0
     implicitWidth: textBackground.implicitWidth + 2 * columnSeparator.width
     implicitHeight: textBackground.implicitHeight
     Rectangle {
@@ -41,6 +40,9 @@ Rectangle {
             elide: styleData.elideMode
             leftPadding: 0
             padding: 0
+            anchors.left: parent.left
+            anchors.right: parent.right
+            horizontalAlignment: styleData.column === 1 ?  Text.AlignRight:  Text.AlignLeft
             text: styleData.value !== undefined ? styleData.value.toString() : ""
         }
     }
