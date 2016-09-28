@@ -1,3 +1,4 @@
+#include <sstream>
 #include <Cli/OptionFormatter.h>
 
 namespace cli {
@@ -5,12 +6,12 @@ namespace cli {
 std::string OptionFormatter::Describe(const std::string& app_name,
 	const std::string& caption,
 	boost::program_options::options_description desc,
-	boost::program_options::positional_options_description* positionalDesc)
+	boost::program_options::positional_options_description* positionals)
 {
 	OptionFormatter option_printer;
 	for (const auto& option : desc.options())
 	{
-		option_printer.AddOption(Option(option, positionalDesc));
+		option_printer.AddOption(Option(option, positionals));
 	}
 
 	std::stringstream description;
