@@ -19,7 +19,12 @@ find_package(Qt5 COMPONENTS Widgets Quick REQUIRED)
 qt5_add_resources(RESOURCES ${Ui_RESOURCES})
 
 file(GLOB HEADER_FILES include/Review/*.h)
-list(REMOVE_ITEM HEADER_FILES ${PROJECT_SOURCE_DIR}/include/Review/Defs.h)
+
+set(QT_WRAP_EXCEPTIONS Defs.h Application.h)
+foreach(header IN ITEMS ${QT_WRAP_EXCEPTIONS})
+	list(REMOVE_ITEM HEADER_FILES ${PROJECT_SOURCE_DIR}/include/Review/${header})
+endforeach(header)
+
 file(GLOB CPP_FILES src/*.cpp)
 
 qt5_wrap_cpp(review_moc ${HEADER_FILES})
