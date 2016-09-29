@@ -12,6 +12,18 @@ SET(_warnings "-Wall -Wextra -Wno-long-long -Wformat-security -Wno-strict-aliasi
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${_warnings}")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${_warnings}")
 
+SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
+
+IF (CMAKE_BUILD_TYPE STREQUAL "Coverage" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
+	IF(CMAKE_COMPILER_IS_GNUCXX)
+		include(CodeCoverage)
+		SET(COVERAGE_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_FLAGS}")
+		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_FLAGS}")
+		setup_target_for_coverage(coverage tests coverage)
+	ENDIF()
+ENDIF()
+
 set(COMPONENTS_DIR components)
 # Add internal libraries
 add_subdirectory(${COMPONENTS_DIR}/Cli)
@@ -21,3 +33,6 @@ add_subdirectory(${COMPONENTS_DIR}/Utils)
 # Add executable
 add_subdirectory(${COMPONENTS_DIR}/Ui)
 add_subdirectory(${COMPONENTS_DIR}/Review)
+
+# Add tests
+add_subdirectory(${COMPONENTS_DIR}/Tests)
