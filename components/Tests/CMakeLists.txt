@@ -16,5 +16,6 @@ file(GLOB CPP_FILES src/*.cpp)
 file(GLOB HEADER_FILES include/Tests/*.h)
 
 add_executable(${PROJECT_NAME} ${CPP_FILES})
+add_dependencies(${PROJECT_NAME} Utils)
 
 target_link_libraries(${PROJECT_NAME} Utils gtest)

@@ -30,5 +30,7 @@ file(GLOB CPP_FILES src/*.cpp)
 qt5_wrap_cpp(review_moc ${HEADER_FILES})
 
 add_executable(${PROJECT_NAME} ${CPP_FILES} ${HEADER_FILES} ${review_moc} ${RESOURCES})
+add_dependencies(${PROJECT_NAME} Utils Cli Git)
+
 qt5_use_modules(${PROJECT_NAME} Widgets Qml)
 target_link_libraries(${PROJECT_NAME} Cli Git Utils Qt5::Widgets Qt5::Quick)

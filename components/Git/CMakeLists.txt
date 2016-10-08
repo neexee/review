@@ -22,4 +22,6 @@ file(GLOB CPP_FILES src/*.cpp)
 file(GLOB HEADER_FILES include/${PROJECT_NAME}/*.h)
 
 add_library(${PROJECT_NAME} STATIC ${CPP_FILES} ${HEADER_FILES})
+add_dependencies(${PROJECT_NAME} Utils)
+
 target_link_libraries(${PROJECT_NAME} Utils ${LIBGIT2_LIBRARIES})
