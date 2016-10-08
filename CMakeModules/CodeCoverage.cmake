@@ -120,7 +120,7 @@ ENDIF() # NOT CMAKE_BUILD_TYPE STREQUAL "Debug"
 #                       HTML report is generated in _outputname/index.html
 # Optional fourth parameter is passed as arguments to _testrunner
 #   Pass them in list form, e.g.: "-j;2" for -j 2
-FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
+FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname _exclude_patterns)
 
 	IF(NOT LCOV_PATH)
 		MESSAGE(FATAL_ERROR "lcov not found! Aborting...")
@@ -130,25 +130,35 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		MESSAGE(FATAL_ERROR "genhtml not found! Aborting...")
 	ENDIF() # NOT GENHTML_PATH
 
-	SET(coverage_info "${CMAKE_BINARY_DIR}/${_outputname}.info")
+	SET(coverage_initial_info "${CMAKE_BINARY_DIR}/initial_${_outputname}.info")
+	SET(coverage_test_info "${CMAKE_BINARY_DIR}/test_${_outputname}.info")
+	SET(coverage_total_info "${CMAKE_BINARY_DIR}/${_outputname}.info")
 	SET(coverage_cleaned "${coverage_info}.cleaned")
 
 	SEPARATE_ARGUMENTS(test_command UNIX_COMMAND "${_testrunner}")
+	SEPARATE_ARGUMENTS(excluded_patterns UNIX_COMMAND "${_exclude_patterns}")
 
 	# Setup target
-	ADD_CUSTOM_TARGET(${_targetname}
-
+	ADD_CUSTOM_TARGET(${_targetname} VERBATIM
 		# Cleanup lcov
-		${LCOV_PATH} --directory . --zerocounters
+		COMMAND ${LCOV_PATH} --zerocounters --quiet --directory .
+
+		# Create baseline coverage info file
+		COMMAND ${LCOV_PATH} --capture --quiet --initial --directory . --output-file ${coverage_initial_info}
 
 		# Run tests
-		COMMAND ${test_command} ${ARGV3}
+		COMMAND ${test_command} ${ARGV4}
 
-		# Capturing lcov counters and generating report
-		COMMAND ${LCOV_PATH} --directory . --capture --output-file ${coverage_info}
-		COMMAND ${LCOV_PATH} --remove ${coverage_info} 'tests/*' '/usr/*' --output-file ${coverage_cleaned}
-		COMMAND ${GENHTML_PATH} -o ${_outputname} ${coverage_cleaned}
-		COMMAND ${CMAKE_COMMAND} -E remove ${coverage_info} ${coverage_cleaned}
+		# Create test coverage info file
+		COMMAND ${LCOV_PATH} --capture --quiet --directory . --output-file ${coverage_test_info}
+
+		# Combine baseline and test coverage data
+		COMMAND ${LCOV_PATH} --quiet --add-tracefile ${coverage_initial_info} --add-tracefile ${coverage_test_info} --output-file ${coverage_total_info}
+
+		# Generate html report with tests excluded
+		COMMAND ${LCOV_PATH} --remove ${coverage_total_info} ${excluded_patterns} --quiet --output-file ${coverage_cleaned}
+		COMMAND ${GENHTML_PATH} --quiet --output-directory ${_outputname} ${coverage_cleaned}
+		COMMAND ${CMAKE_COMMAND} -E remove ${coverage_total_info} ${coverage_cleaned}
 
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 		COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."

@@ -17,10 +17,12 @@ SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 IF (CMAKE_BUILD_TYPE STREQUAL "Coverage" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
 	IF(CMAKE_COMPILER_IS_GNUCXX)
 		include(CodeCoverage)
-		SET(COVERAGE_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_FLAGS}")
-		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_FLAGS}")
-		setup_target_for_coverage(coverage tests coverage)
+
+		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_COVERAGE}")
+		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_COVERAGE}")
+		SET(EXCLUDE_FROM_COVERAGE "components/Tests/* /usr/* qrc_*.cpp moc_*.cpp")
+
+		setup_target_for_coverage(coverage tests coverage ${EXCLUDE_FROM_COVERAGE})
 	ENDIF()
 ENDIF()
 
