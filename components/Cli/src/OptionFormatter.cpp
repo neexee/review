@@ -8,30 +8,30 @@ std::string OptionFormatter::Describe(const std::string& app_name,
 	boost::program_options::options_description desc,
 	boost::program_options::positional_options_description* positionals)
 {
-	OptionFormatter option_printer;
-	for (const auto& option : desc.options())
-	{
-		option_printer.AddOption(Option(option, positionals));
-	}
-
+	OptionFormatter formatter(desc, positionals);
 	std::stringstream description;
-	description << "Usage: " << app_name << " " << option_printer.Usage() << std::endl
+	description << formatter.Usage(app_name) << std::endl
 				<< std::endl
 				<< caption << std::endl
 				<< std::endl
-				<< option_printer.PositionalsDetails() << std::endl
-				<< option_printer.ArgumentDetails() << std::endl;
+				<< formatter.PositionalsDetails() << std::endl
+				<< formatter.ArgumentDetails() << std::endl;
 	return description.str();
 }
 
-void OptionFormatter::AddOption(const Option& option)
+OptionFormatter::OptionFormatter(boost::program_options::options_description desc,
+	boost::program_options::positional_options_description* positionals)
 {
-	option.positional ? positional_options_.push_back(option) : options_.push_back(option);
+	for (const auto& option : desc.options())
+	{
+		AddOption(Option(option, positionals));
+	}
 }
 
-std::string OptionFormatter::Usage()
+std::string OptionFormatter::Usage(const std::string& app_name)
 {
 	std::stringstream usage;
+	usage << "Usage: " << app_name << " ";
 	usage << ShortOptionalOptions() << " ";
 	for (auto& option : options_)
 	{
@@ -52,7 +52,9 @@ std::string OptionFormatter::Usage()
 	{
 		usage << option.display_name << " ";
 	}
-	return usage.str();
+	auto usage_str = usage.str();
+	usage_str.erase(usage_str.find_last_not_of(" ") + 1);
+	return usage_str;
 }
 
 std::string OptionFormatter::ShortOptionalOptions()
@@ -93,6 +95,11 @@ std::string OptionFormatter::ArgumentDetails()
 		output << option.Usage() << std::endl;
 	}
 	return output.str();
+}
+
+void OptionFormatter::AddOption(const Option& option)
+{
+	option.positional ? positional_options_.push_back(option) : options_.push_back(option);
 }
 
 } //namespace cli

@@ -17,7 +17,10 @@ class DiffModel : public QObject
 	Q_PROPERTY(QList<QObject*> deltas READ Deltas NOTIFY DeltasChanged)
 
 public:
+	DiffModel();
 	DiffModel(const std::string& from, const std::string& to, const std::string& repo);
+	DiffModel(DiffModel&& another) = default;
+
 	QVector<QString> Paths() const;
 	QList<QObject*> Deltas();
 

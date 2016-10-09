@@ -28,7 +28,7 @@ public:
 	LineType GetLineType() const;
 	int LineNumber() const;
 	QString Text() const;
-	Commit* GetCommit() const;
+	Commit* GetCommit();
 
 Q_SIGNALS:
 	void TextChanged();
@@ -38,7 +38,7 @@ Q_SIGNALS:
 
 private:
 	git::AnnotatedDiffLinePtr line_;
-	CommitPtr commit_;
+	Commit commit_;
 };
 
 typedef std::shared_ptr<DiffLine> DiffLinePtr;

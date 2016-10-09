@@ -55,4 +55,9 @@ cli::Options Application::ParseOptions(int argc, char** argv)
 	}
 }
 
+review::Review* Application::Review()
+{
+	return review_.get();
+}
+
 } // namespace review

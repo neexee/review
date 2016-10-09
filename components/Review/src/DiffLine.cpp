@@ -12,7 +12,7 @@ DiffLine::DiffLine()
 
 DiffLine::DiffLine(git::AnnotatedDiffLinePtr& line)
 : line_(line)
-, commit_(std::make_shared<Commit>(line->Commit()))
+, commit_(line->Commit())
 {
 }
 
@@ -39,9 +39,9 @@ int DiffLine::LineNumber() const
 	return line_->NewNumber();
 }
 
-Commit* DiffLine::GetCommit() const
+Commit* DiffLine::GetCommit()
 {
-	return commit_.get();
+	return &commit_;
 }
 
 QString DiffLine::Text() const

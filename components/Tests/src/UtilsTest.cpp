@@ -1,15 +1,11 @@
 #include <string>
 #include <vector>
-#include <Tests/Utils.h>
+#include <Tests/UtilsTest.h>
 #include <Utils/Utils.h>
 
 namespace tests {
 
 UtilsTest::UtilsTest()
-{
-}
-
-UtilsTest::~UtilsTest()
 {
 }
 

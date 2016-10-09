@@ -5,6 +5,10 @@
 
 namespace review {
 
+DiffModel::DiffModel()
+{
+}
+
 DiffModel::DiffModel(const std::string& from,
 	const std::string& to,
 	const std::string& repo_path)

@@ -3,6 +3,10 @@
 
 namespace review {
 
+Commit::Commit()
+{
+}
+
 Commit::Commit(const git::CommitPtr& commit)
 : commit_(commit)
 {

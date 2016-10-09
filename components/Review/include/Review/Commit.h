@@ -12,6 +12,7 @@ class Commit : public QObject
 	Q_OBJECT
 
 public:
+	Commit();
 	Commit(const git::CommitPtr& commit);
 
 	Q_INVOKABLE QString Summary() const;

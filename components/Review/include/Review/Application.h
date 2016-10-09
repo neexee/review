@@ -16,9 +16,11 @@ public:
 	Application(int argc, char** argv);
 	int Run();
 
+	review::Review* Review(); // Only for testing
+	void Init();
+
 private:
 	cli::Options ParseOptions(int argc, char** argv);
-	void Init();
 	void RegisterTypes();
 	void ShowMainWindow();
 
